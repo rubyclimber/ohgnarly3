@@ -82,7 +82,7 @@ module.exports.getFormats = function(req, res) {
 module.exports.updateMovie = (req, res) => {
     var query = {userId: req.body.userId, imdbid: req.body.imdbid};
     var update = req.body.update;
-    console.log('query, update', query, update);
+    console.log(query, update);
     Movie.findOneAndUpdate(query, update, response => {
         console.log(response);
         res.send({success: true, movie: response});

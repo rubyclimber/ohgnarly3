@@ -66,10 +66,6 @@ module.exports = function(io) {
         movieCtrl.deleteMovie(req, res);
     });
 
-    router.patch('/movie', (req, res) => {
-        movieCtrl.updateMovie(req, res);
-    });
-
     router.put('/movie', (req, res) => {
         movieCtrl.updateMovie(req, res);
     });
