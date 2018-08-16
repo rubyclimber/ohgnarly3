@@ -70,6 +70,10 @@ module.exports = function(io) {
         movieCtrl.updateMovie(req, res);
     });
 
+    router.put('/movie', (req, res) => {
+        movieCtrl.updateMovie(req, res);
+    });
+
     router.get('/shows/:userId', (req, res) => {
         showCtrl.getUserShows(req, res);
     });
