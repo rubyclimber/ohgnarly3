@@ -15,6 +15,7 @@ module.exports.getMovies = (req, res) => {
 };
 
 module.exports.createMovie = (req, res) => {
+    console.log(req.body);
     var movie = new Movie({
         title: req.body.title, 
         description: req.body.description, 
