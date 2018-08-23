@@ -1,6 +1,8 @@
 module.exports = function(io) {    
     let exports = {};
     const Message = require('../models/server.message');
+    const Conversation = require('../models/server.conversation');
+    const User = require('../models/server.user');
 
     exports.getMessages = function(req, res) {
         Message.find({createdAt: {$gt: new Date(Date.now() - (24 * 60 * 60 * 1000))}}).exec((err, messages) => {
@@ -33,7 +35,6 @@ module.exports = function(io) {
     exports.searchMessages = function(req, res) {
         var searchDate = req.body.searchDate;
         var searchText = req.body.searchText;
-        console.log(req.body);
 
         if (searchDate) {
             var startDate = new Date(searchDate);
@@ -63,6 +64,84 @@ module.exports = function(io) {
         var message = new Message({messageBody: msg.messageBody, userId: msg.userId});
         message.save();
         io.emit('chat-message', message);
+    };
+
+    exports.getConversations = (req, res) => {
+        var userId = req.params.userId;
+        var conversations = [];
+        Conversation.find({userId1: {$eq: userId}}).exec((err, convos1) => {
+            if (err) {
+                console.error(err);
+                res.status(500);
+            }
+
+            conversations = conversations.concat(convos1);
+            Conversation.find({userId2: {$eq: userId}}).exec((err, convos2) => {
+                if (err) {
+                    console.error(err);
+                    res.status(500);
+                }
+
+                conversations = conversations.concat(convos2);
+                res.send(conversations);
+            });
+        });
+    };
+
+    exports.getConversation = (req, res) => {
+        var conversationId = req.params.conversationId;
+        var result = {};
+        Conversation.findById(conversationId).exec((err, conversation) => {
+            if (err) {
+                console.error(err);
+                res.status(505);
+            }
+
+            result.conversationId = conversation.conversationId;
+            result.userId1 = conversation.userId1;
+            result.userId2 = conversation.userId2;
+            User.findById(conversation.userId1).exec((err, user1) => {
+                if (err) {
+                    console.error(err);
+                    res.status(505);
+                }
+
+                result.user1 = user1;
+
+                User.findById(conversation.userId2).exec((err, user2) => {
+                    if (err) {
+                        console.error(err);
+                        res.status(505);
+                    }
+
+                    result.user2 = user2;
+                    res.send(result);
+                });
+            });
+        });
+    };
+
+    exports.getConverationMessages = (req, res) => {
+        var conversationId = req.params.conversationId;
+        Message.find({conversationId: {$eq: conversationId}, createdAt: {$gt: new Date(Date.now() - (24 * 60 * 60 * 1000))}}).exec((err, messages) => {
+            if (err) {
+                console.error(err);
+                res.status(500);
+            }
+
+            res.send(messages);
+        });
+    };
+
+    exports.updateMessages = (req, res) => {
+        Message.update({}, {conversationId: '5b44cacd8d864f80e854e266'}, {multi: true}, err => {
+            if (err) {
+                console.error(err);
+                res.status(500);
+            }
+
+            res.send('done');
+        });
     }
 
     return exports;

@@ -98,5 +98,25 @@ module.exports = function(io) {
         movieCtrl.getFormats(req, res);
     });
 
+    router.get('/conversations/:userId', (req, res) => {
+        messageCtrl.getConversations(req, res);
+    });
+
+    router.get('/user/:userId', (req, res) => {
+        homeCtrl.getUser(req, res);
+    });
+
+    router.get('/conversation/:conversationId', (req, res) => {
+        messageCtrl.getConversation(req, res);
+    });
+
+    router.get('/conversation/messages/:conversationId', (req, res) => {
+        messageCtrl.getConverationMessages(req, res);
+    });
+
+    router.post('/log', (req, res) => {
+        homeCtrl.logObject(req, res);
+    });
+
     return router;
 }
