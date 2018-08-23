@@ -53,3 +53,21 @@ module.exports.getContacts = function(req, res) {
         });
     });
 };
+
+module.exports.getUser = (req, res) => {
+    var userId = req.params.userId;
+    User.findById(userId).exec((err, user) => {
+       if (err) {
+           console.error(err);
+           res.status(500);
+       } 
+
+       res.send(user);
+    });
+};
+
+module.exports.logObject = (req, res) => {
+    console.log(req.body.logObject);
+
+    res.send({success: true});
+}
