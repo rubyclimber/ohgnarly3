@@ -89,3 +89,14 @@ module.exports.updateMovie = (req, res) => {
         res.send({success: true, movie: response});
     });
 };
+
+module.exports.getMovie = (req, res) => {
+    var query = {userId: req.params.userId, imdbid: req.params.imdbid};
+    Movie.findOne(query).exec((err, movie) => {
+        if (err) {
+            return console.error(err);
+        }
+
+        res.send(movie);
+    });
+};

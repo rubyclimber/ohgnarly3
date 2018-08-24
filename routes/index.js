@@ -118,5 +118,9 @@ module.exports = function(io) {
         homeCtrl.logObject(req, res);
     });
 
+    router.get('/movie/:userId/:imdbid', (req, res) => {
+        movieCtrl.getMovie(req, res);
+    });
+
     return router;
 }
