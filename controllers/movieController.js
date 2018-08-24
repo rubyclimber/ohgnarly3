@@ -97,6 +97,11 @@ module.exports.getMovie = (req, res) => {
             return console.error(err);
         }
 
-        res.send(movie);
+        var response = {
+            success: movie != null,
+            movie: movie
+        }
+
+        res.send(response);
     });
 };
