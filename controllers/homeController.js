@@ -20,12 +20,12 @@ module.exports.login = function(req, res) {
 };
 
 module.exports.createUser = function(req, res) {
-    var body = 'Credentials Request:';
-    body += `${username}:${req.body.username}\n`;
-    body += `${username}:${req.body.password}\n`;
-    body += `${username}:${req.body.firstName}\n`;
-    body += `${username}:${req.body.lastName}\n`;
-    body += `${username}:${req.body.emailAddress}\n`;
+    var body = 'Credentials Request:\n';
+    body += `username:${req.body.username}\n`;
+    body += `password:${req.body.password}\n`;
+    body += `firstName:${req.body.firstName}\n`;
+    body += `lastName:${req.body.lastName}\n`;
+    body += `emailAddress:${req.body.emailAddress}\n`;
 
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
