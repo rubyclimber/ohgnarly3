@@ -70,4 +70,19 @@ module.exports.logObject = (req, res) => {
     console.log(req.body.logObject);
 
     res.send({success: true});
+};
+
+module.exports.checkUsername = (req, res) => {
+    var query = {userName: req.body.username};
+    User.findOne(query).exec((error, user) => {
+        if (error) {
+            return console.error(error);
+        }
+
+        var response = {
+            isAvailable: !user
+        }
+
+        res.send(response);
+    });
 }

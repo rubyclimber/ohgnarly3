@@ -122,5 +122,9 @@ module.exports = function(io) {
         movieCtrl.getMovie(req, res);
     });
 
+    router.post('/check-username', (req, res) => {
+        homeCtrl.checkUsername(req, res);
+    });
+
     return router;
 }
