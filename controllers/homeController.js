@@ -22,7 +22,7 @@ module.exports.login = function(req, res) {
 module.exports.createUser = function(req, res) {
     PendingUser.find().exec((error, users) => {
         console.log(users);
-        if (users && users.length && users.length >= 2) {
+        if (users && users.length && users.length >= 20) {
             res.send({success: false});
         } else {
             var pendingUser = new PendingUser({
