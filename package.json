@@ -21,7 +21,6 @@
     "imdb-api": "^3.1.2",
     "mongoose": "^4.11.6",
     "morgan": "^1.8.2",
-    "nodemailer": "^4.6.8",
     "serve-favicon": "^2.4.3",
     "socket.io": "^2.1.1"
   },

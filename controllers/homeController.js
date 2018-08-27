@@ -1,7 +1,7 @@
 var User = require('../models/server.user');
 var Category = require('../models/server.category');
 var UserContact = require('../models/server.userContact');
-var nodemailer = require('nodemailer');
+var PendingUser = require('../models/server.pendingUser');
 
 module.exports.login = function(req, res) {
     let username = req.body.userName.toLowerCase();
@@ -20,33 +20,20 @@ module.exports.login = function(req, res) {
 };
 
 module.exports.createUser = function(req, res) {
-    var body = 'Credentials Request:\n';
-    body += `username:${req.body.username}\n`;
-    body += `password:${req.body.password}\n`;
-    body += `firstName:${req.body.firstName}\n`;
-    body += `lastName:${req.body.lastName}\n`;
-    body += `emailAddress:${req.body.emailAddress}\n`;
-
-    var transporter = nodemailer.createTransport({
-        service: 'Gmail',
-        auth: {
-            user: 'asmitty92@gmail.com',
-            pass: 'Sbsbai#3'
-        }
-    });
-
-    var mailOptions = {
-        from: 'no-reply@ohgnarly.com',
-        to: 'asmitty92@gmail.com',
-        subject: 'New User Request',
-        text: body
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.error(error);
+    PendingUser.find().exec((error, users) => {
+        console.log(users);
+        if (users && users.length && users.length >= 2) {
             res.send({success: false});
         } else {
+            var pendingUser = new PendingUser({
+                userName: req.body.username,
+                password: req.body.password,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                emailAddress: req.body.emailAddress
+            });
+        
+            pendingUser.save();
             res.send({success: true});
         }
     });
