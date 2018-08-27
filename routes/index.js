@@ -126,5 +126,7 @@ module.exports = function(io) {
         homeCtrl.checkUsername(req, res);
     });
 
+    router.post('/check-email', homeCtrl.checkEmailAddress);
+
     return router;
 }

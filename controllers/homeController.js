@@ -85,4 +85,20 @@ module.exports.checkUsername = (req, res) => {
 
         res.send(response);
     });
-}
+};
+
+module.exports.checkEmailAddress = (req, res) => {
+    var query = {emailAddress: req.body.emailAddress};
+    User.findOne(query).exec((error, user) => {
+        console.log(error, user);
+        if (error) {
+            return console.error(error);
+        }
+
+        var response = {
+            isAvailable: !user
+        }
+
+        res.send(response);
+    });
+};
