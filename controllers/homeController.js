@@ -1,6 +1,7 @@
 var User = require('../models/server.user');
 var Category = require('../models/server.category');
 var UserContact = require('../models/server.userContact');
+var nodemailer = require('nodemailer');
 
 module.exports.login = function(req, res) {
     let username = req.body.userName.toLowerCase();
@@ -19,7 +20,36 @@ module.exports.login = function(req, res) {
 };
 
 module.exports.createUser = function(req, res) {
-    res.send({success: false});
+    var body = 'Credentials Request:';
+    body += `${username}:${req.body.username}\n`;
+    body += `${username}:${req.body.password}\n`;
+    body += `${username}:${req.body.firstName}\n`;
+    body += `${username}:${req.body.lastName}\n`;
+    body += `${username}:${req.body.emailAddress}\n`;
+
+    var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'asmitty92@gmail.com',
+            pass: 'Sbsbai#3'
+        }
+    });
+
+    var mailOptions = {
+        from: 'no-reply@ohgnarly.com',
+        to: 'asmitty92@gmail.com',
+        subject: 'New User Request',
+        text: body
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error(error);
+            res.send({success: false});
+        } else {
+            res.send({success: true});
+        }
+    });
 };
 
 module.exports.getUsers = function(req, res) {
@@ -90,7 +120,6 @@ module.exports.checkUsername = (req, res) => {
 module.exports.checkEmailAddress = (req, res) => {
     var query = {emailAddress: req.body.emailAddress};
     User.findOne(query).exec((error, user) => {
-        console.log(error, user);
         if (error) {
             return console.error(error);
         }

@@ -128,5 +128,7 @@ module.exports = function(io) {
 
     router.post('/check-email', homeCtrl.checkEmailAddress);
 
+    router.post('/create-user', homeCtrl.createUser);
+
     return router;
 }
