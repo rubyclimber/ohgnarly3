@@ -14,7 +14,8 @@ var movieSchema = new Schema({
     wishlist: {type: Boolean, default: false},
     createdAt: {type: Date, default: Date.now},
     imdbid: String,
-    format: String
+    format: String,
+    rating: {type: Number, default: 0}
 });
 
 module.exports = mongoose.model("Movie", movieSchema, "Movies");
