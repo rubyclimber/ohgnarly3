@@ -1,4 +1,4 @@
-var Show = require('../models/server.show');
+var Show = require('../models/show');
 var imdb = require('imdb-api');
 
 module.exports.getUserShows = function(req, res) {

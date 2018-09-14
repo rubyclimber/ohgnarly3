@@ -1,8 +1,8 @@
 module.exports = function(io) {    
     let exports = {};
-    const Message = require('../models/server.message');
-    const Conversation = require('../models/server.conversation');
-    const User = require('../models/server.user');
+    const Message = require('../models/message');
+    const Conversation = require('../models/conversation');
+    const User = require('../models/user');
 
     exports.getMessages = function(req, res) {
         Message.find({createdAt: {$gt: new Date(Date.now() - (24 * 60 * 60 * 1000))}}).exec((err, messages) => {

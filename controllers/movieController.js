@@ -1,5 +1,5 @@
 var exports = module.exports = {};
-var Movie = require('../models/server.movie');
+var Movie = require('../models/movie');
 var imdb = require('imdb-api');
 var formats = require('../infrastructure/formats');
 

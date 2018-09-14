@@ -1,7 +1,11 @@
-var User = require('../models/server.user');
-var Category = require('../models/server.category');
-var UserContact = require('../models/server.userContact');
-var PendingUser = require('../models/server.pendingUser');
+var User = require('../models/user');
+var Category = require('../models/category');
+var UserContact = require('../models/userContact');
+var PendingUser = require('../models/pendingUser');
+
+module.exports.showHomePage = (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+};
 
 module.exports.login = function(req, res) {
     let username = req.body.userName.toLowerCase();

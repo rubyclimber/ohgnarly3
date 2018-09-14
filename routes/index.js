@@ -6,125 +6,59 @@ module.exports = function(io) {
     var movieCtrl = require('../controllers/movieController');
     var messageCtrl = require('../controllers/messageController')(io);
 
-    router.get('/', (req, res) => {
-        res.sendFile(path.join(__dirname, 'public', 'index.html'));
-    });
+    router.post('/login', homeCtrl.login);
 
-    router.post('/login', (req, res) => {
-        homeCtrl.login(req, res);
-    });
+    router.get('/messages', messageCtrl.getMessages);
 
-    router.get('/messages', (req, res) => {
-        messageCtrl.getMessages(req, res);
-    });
+    router.post('/message', messageCtrl.createMessage);
 
-    router.post('/message', (req, res) => {
-        messageCtrl.createMessage(req, res);
-    });
+    router.get('/users', homeCtrl.getUsers);
 
-    router.get('/users', (req, res) => {
-        homeCtrl.getUsers(req, res);
-    });
+    router.get('/categories', homeCtrl.getCategories);
 
-    router.get('/categories', (req, res) => {
-        homeCtrl.getCategories(req, res);
-    });
+    router.get('/new-movie', homeCtrl.createUser);
 
-    //Testing route for changes to messenger.  This simulates a message from DJ.
-    router.get('/new-message', (req, res) => {
-        req.body.body = 'Sup, dude';
-        req.body.userId = '58cb3e444c8d5f6b7cdd71f6';
-        homeCtrl.createMessage(req, res);
-    });
+    router.get('/contacts/:userId', homeCtrl.getContacts);
 
-    router.get('/new-movie', (req, res) => {
-        movieCtrl.createUser(req, res);
-    });
+    router.get('/movies/:userId', movieCtrl.getMovies);
 
-    router.get('/contacts/:userId', (req, res) => {
-        homeCtrl.getContacts(req, res);
-    });
+    router.post('/movie', movieCtrl.createMovie);
 
-    router.get('/movies/:userId', (req, res) => {
-        movieCtrl.getMovies(req, res);
-    });
+    router.get('/movie-details/:onlineId', movieCtrl.getMovieDetails);
 
-    router.post('/movie', (req, res) => {
-        movieCtrl.createMovie(req, res);
-    });
+    router.get('/movie-search/:title/:page', movieCtrl.searchMovies);
 
-    router.get('/movie-details/:onlineId', (req, res) => {
-        // setTimeout(homeCtrl.getMovieDetails, 3000, req, res);
-        movieCtrl.getMovieDetails(req, res);
-    });
+    router.delete('/movie/:userId/:imdbid', movieCtrl.deleteMovie);
 
-    router.get('/movie-search/:title/:page', (req, res) => {
-        movieCtrl.searchMovies(req, res);
-    });
+    router.put('/movie', movieCtrl.updateMovie);
 
-    router.delete('/movie/:userId/:imdbid', (req, res) => {
-        movieCtrl.deleteMovie(req, res);
-    });
+    router.get('/shows/:userId', showCtrl.getUserShows);
 
-    router.put('/movie', (req, res) => {
-        movieCtrl.updateMovie(req, res);
-    });
+    router.post('/show', showCtrl.createShow);
 
-    router.get('/shows/:userId', (req, res) => {
-        showCtrl.getUserShows(req, res);
-    });
+    router.put('/show', showCtrl.updateShow);
 
-    router.post('/show', (req, res) => {
-        showCtrl.createShow(req, res);
-    });
+    router.get('/show-search/:title/:page', showCtrl.searchShows);
 
-    router.put('/show', (req, res) => {
-        showCtrl.updateShow(req, res);
-    });
+    router.get('/all-messages/:userId', messageCtrl.getAllMessages);
 
-    router.get('/show-search/:title/:page', (req, res) => {
-        showCtrl.searchShows(req, res);
-    });
+    router.post('/messages', messageCtrl.searchMessages);
 
-    router.get('/all-messages/:userId', (req, res) => {
-        messageCtrl.getAllMessages(req, res);
-    });
+    router.get('/movie-formats', movieCtrl.getFormats);
 
-    router.post('/messages', (req, res) => {
-        messageCtrl.searchMessages(req, res);
-    });
+    router.get('/conversations/:userId', messageCtrl.getConversations);
 
-    router.get('/movie-formats', (req, res) => {
-        movieCtrl.getFormats(req, res);
-    });
+    router.get('/user/:userId', homeCtrl.getUser);
 
-    router.get('/conversations/:userId', (req, res) => {
-        messageCtrl.getConversations(req, res);
-    });
+    router.get('/conversation/:conversationId', messageCtrl.getConversation);
 
-    router.get('/user/:userId', (req, res) => {
-        homeCtrl.getUser(req, res);
-    });
+    router.get('/conversation/messages/:conversationId', messageCtrl.getConverationMessages);
 
-    router.get('/conversation/:conversationId', (req, res) => {
-        messageCtrl.getConversation(req, res);
-    });
+    router.post('/log', homeCtrl.logObject);
 
-    router.get('/conversation/messages/:conversationId', (req, res) => {
-        messageCtrl.getConverationMessages(req, res);
-    });
+    router.get('/movie/:userId/:imdbid', movieCtrl.getMovie);
 
-    router.post('/log', (req, res) => {
-        homeCtrl.logObject(req, res);
-    });
-
-    router.get('/movie/:userId/:imdbid', (req, res) => {
-        movieCtrl.getMovie(req, res);
-    });
-
-    router.post('/check-username', (req, res) => {
-        homeCtrl.checkUsername(req, res);
-    });
+    router.post('/check-username', homeCtrl.checkUsername);
 
     router.post('/check-email', homeCtrl.checkEmailAddress);
 
