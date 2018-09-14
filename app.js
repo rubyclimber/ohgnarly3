@@ -10,6 +10,7 @@ const favicon = require('serve-favicon');
 const mongoose = require('mongoose');
 const debug = require('debug')('ohgnarly:server');
 const socket = require('socket.io');
+const authorization = require('./services/authorization');
 
 /**
  * Initialize mongodb connection
@@ -42,6 +43,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(authorization.validateApiCall);
 app.use('/api', api);
 app.use('/', index);
 

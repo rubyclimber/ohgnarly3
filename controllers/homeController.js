@@ -118,3 +118,16 @@ module.exports.checkEmailAddress = (req, res) => {
         res.send(response);
     });
 };
+
+module.exports.createManualUser = (req, res) => {
+    var user = new User({
+        userName: 'rokeefe',
+        password: 'WinterIsComing',
+        firstName: 'Rob',
+        lastName: "O'Keefe",
+        emailAddress: 'test@test.com'
+    });
+
+    user.save();
+    res.send({success: true});
+};
