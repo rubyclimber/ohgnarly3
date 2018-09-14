@@ -1,6 +1,4 @@
-module.exports = exports = {};
-
-exports.formats = {
+module.exports.formats = {
     DVD: 'DVD',
     Bluray: 'Blu-ray',
     Bluray3d: 'Blu-ray 3D',

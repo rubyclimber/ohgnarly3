@@ -1,4 +1,3 @@
-var exports = module.exports = {};
 var Movie = require('../models/movie');
 var imdb = require('imdb-api');
 var formats = require('../infrastructure/formats');
@@ -35,7 +34,7 @@ module.exports.getMovieDetails = (req, res) => {
         imdb.getById(onlineId, {apiKey: '1e37ecbf'}).then(movie => {
             
             res.send({success: true, movie: movie});
-        }).catch(error => {
+        }).catch(() => {
             res.send({success: false});
         });
     } else {
@@ -70,7 +69,7 @@ module.exports.deleteMovie = (req, res) => {
     });
 };
 
-module.exports.getFormats = function(req, res) {
+module.exports.getFormats = (req, res) => {
     var results = [];
     
     for (let format in formats.formats) {

@@ -7,7 +7,7 @@ module.exports.showHomePage = (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 };
 
-module.exports.login = function(req, res) {
+module.exports.login = (req, res) => {
     let username = req.body.userName.toLowerCase();
     User.findOne({userName: username}, (err, user) => {
         if (err) {
@@ -23,9 +23,12 @@ module.exports.login = function(req, res) {
     });
 };
 
-module.exports.createUser = function(req, res) {
-    PendingUser.find().exec((error, users) => {
-        console.log(users);
+module.exports.createUser = (req, res) => {
+    PendingUser.find().exec((err, users) => {
+        if (err) {
+            return console.error(err);
+        }
+
         if (users && users.length && users.length >= 20) {
             res.send({success: false});
         } else {
@@ -43,7 +46,7 @@ module.exports.createUser = function(req, res) {
     });
 };
 
-module.exports.getUsers = function(req, res) {
+module.exports.getUsers = (req, res) => {
     User.find().exec((err, users) => {
         if (err) {
             return console.error(err);
@@ -53,7 +56,7 @@ module.exports.getUsers = function(req, res) {
     });
 };
 
-module.exports.getCategories = function(req, res) {
+module.exports.getCategories = (req, res) => {
     Category.find().exec((err, categories) => {
         if (err) {
             return console.error(err);
@@ -63,7 +66,7 @@ module.exports.getCategories = function(req, res) {
     });
 };
 
-module.exports.getContacts = function(req, res) {
+module.exports.getContacts = (req, res) => {
     UserContact.find({userId: req.params.userId}).exec((err, contacts) => {
         User.find({_id: {"$in": contacts.map(e => e.contactId)}}).exec((err, users) => {
             if (err) {
@@ -95,9 +98,9 @@ module.exports.logObject = (req, res) => {
 
 module.exports.checkUsername = (req, res) => {
     var query = {userName: req.body.username};
-    User.findOne(query).exec((error, user) => {
-        if (error) {
-            return console.error(error);
+    User.findOne(query).exec((err, user) => {
+        if (err) {
+            return console.error(err);
         }
 
         var response = {
@@ -110,9 +113,9 @@ module.exports.checkUsername = (req, res) => {
 
 module.exports.checkEmailAddress = (req, res) => {
     var query = {emailAddress: req.body.emailAddress};
-    User.findOne(query).exec((error, user) => {
-        if (error) {
-            return console.error(error);
+    User.findOne(query).exec((err, user) => {
+        if (err) {
+            return console.error(err);
         }
 
         var response = {
