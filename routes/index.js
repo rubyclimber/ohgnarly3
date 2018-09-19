@@ -64,5 +64,7 @@ module.exports = function(io) {
 
     router.post('/create-user', homeCtrl.createUser);
 
+    //router.post('/update-movies', movieCtrl.updateMovies);
+
     return router;
 }

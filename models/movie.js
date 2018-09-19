@@ -15,7 +15,8 @@ var movieSchema = new Schema({
     createdAt: {type: Date, default: Date.now},
     imdbid: String,
     format: String,
-    rating: {type: Number, default: 0}
+    rating: {type: Number, default: 0},
+    poster: String
 });
 
 module.exports = mongoose.model("Movie", movieSchema, "Movies");

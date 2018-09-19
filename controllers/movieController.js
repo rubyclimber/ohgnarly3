@@ -22,7 +22,8 @@ module.exports.createMovie = (req, res) => {
         director: req.body.director,
         imdbid: req.body.imdbid,
         wishlist: req.body.wishlist,
-        format: req.body.format || formats.formats.DVD
+        format: req.body.format || formats.formats.DVD,
+        poster: req.body.poster
     });
     movie.save();
     res.send(movie);
@@ -104,3 +105,21 @@ module.exports.getMovie = (req, res) => {
         res.send(response);
     });
 };
+
+module.exports.updateMovies = (req, res) => {
+    Movie.find().exec((err, movies) => {
+        for (let movie of movies) {
+            // imdb.getById(movie.imdbid, {apiKey: '1e37ecbf'}).then(onlineMovie => {
+            //     movie.poster = onlineMovie.poster;
+            //     let query = {userId: movie.userId, imdbid: movie.imdbid};
+            //     let update = {poster: onlineMovie.poster};
+            //     Movie.updateOne(query, update, () => {
+            //         console.log(movie.title + ' updated!');
+            //     });
+            // });
+            console.log(movie.poster);
+        }
+
+        res.send('done');
+    });
+}
