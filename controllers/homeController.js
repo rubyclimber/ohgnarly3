@@ -2,6 +2,7 @@ var User = require('../models/user');
 var Category = require('../models/category');
 var UserContact = require('../models/userContact');
 var PendingUser = require('../models/pendingUser');
+const authentication = require('../services/authentication');
 
 module.exports.showHomePage = (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -14,8 +15,9 @@ module.exports.login = (req, res) => {
             console.error(err);
             return res.send({success: false, userId: null});
         }
-            
-        if (user && user.password == req.body.password) {
+
+        var encryptedPassword = authentication.encryptString(req.body.password);
+        if (user && user.password == encryptedPassword) {
             res.send({success: true, userId: user._id});
         } else {
             res.send({success: false, userId: null});
@@ -138,3 +140,21 @@ module.exports.createManualUser = (req, res) => {
     user.save();
     res.send({success: true});
 };
+
+module.exports.updateUserPasswords = (req, res) => {
+    User.find().exec((err, users) => {
+        for (let user of users) {
+            console.log(user.userName);
+            let query = {_id: user._id};
+            let update = {password: authentication.encryptString(user.password)};
+
+            User.findOneAndUpdate(query, update, (err) => {
+                if (err) {
+                    return console.error(err);
+                }
+
+                console.log('done');
+            })
+        }
+    });
+}
