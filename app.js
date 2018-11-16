@@ -11,6 +11,7 @@ const mongoose = require('mongoose');
 const debug = require('debug')('ohgnarly:server');
 const socket = require('socket.io');
 const authorization = require('./services/authorization');
+const cors = require('cors');
 
 /**
  * Initialize mongodb connection
@@ -36,7 +37,7 @@ let index = require('./routes/index')(io);
 let api = require('./routes/api')(io);
 const messageCtrl = require('./controllers/messageController')(io);
 
-
+app.use(cors());
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
