@@ -37,7 +37,20 @@ let index = require('./routes/index')(io);
 let api = require('./routes/api')(io);
 const messageCtrl = require('./controllers/messageController')(io);
 
-app.use(cors());
+const allowedOrigins = ['http://localhost:3000', 'http://ohgnarly.herokuapp.com', 'https://ohgnarly.herokuapp.com']
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin){
+            return callback(null, true);
+        }
+
+        if (allowedOrigins.indexOf(origin) === -1) {
+            return callback(new Error('Invalid origin', false));
+        }
+
+        return callback(null, true);
+    }
+}));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
