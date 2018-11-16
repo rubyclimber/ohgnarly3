@@ -2,7 +2,9 @@ var User = require('../models/user');
 var Category = require('../models/category');
 var UserContact = require('../models/userContact');
 var PendingUser = require('../models/pendingUser');
+var ChatUser = require('../models/chatUser');
 const authentication = require('../services/authentication');
+const responseBuilder = require('../infrastructure/response-builder');
 
 module.exports.showHomePage = (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -12,15 +14,36 @@ module.exports.login = (req, res) => {
     let username = req.body.userName.toLowerCase();
     User.findOne({userName: username}, (err, user) => {
         if (err) {
-            console.error(err);
-            return res.send({success: false, userId: null});
+            res.status(500);
+            res.send(responseBuilder.buildExceptionResponse(err));
+            return;
         }
 
         var encryptedPassword = authentication.encryptString(req.body.password);
         if (user && user.password == encryptedPassword) {
-            res.send({success: true, userId: user._id});
+            res.send(responseBuilder.buildSuccessResponse({userId: user._id}));
         } else {
-            res.send({success: false, userId: null});
+            res.send(responseBuilder.buildSuccessResponse({userId: null}));
+        }
+    });
+};
+
+module.exports.chatLogin = (req, res) => {
+    let username = req.body.userName.toLowerCase();
+    ChatUser.findOne({userName: username}, (err, user) => {
+        if (err) {
+            res.status(500);
+            res.send(responseBuilder.buildExceptionResponse(err));
+            return;
+        }
+
+        var encryptedPassword = req.body.password;//authentication.encryptString(req.body.password);
+        if (user && user.password == encryptedPassword) {
+            console.log('successful login');
+            res.send({userId: user._id, success: true});
+        } else {
+            console.log('failed login');
+            res.send({userId: null, success: false});
         }
     });
 };

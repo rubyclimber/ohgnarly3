@@ -6,9 +6,6 @@ var apiKeys = {
 module.exports.validateApiCall = (req, res, next) => {
     var sender = req.headers['sender'];
     var apiKey = req.headers['api-key'];
-    console.log('api-keys: ', apiKeys);
-    console.log('sender: ', sender);
-    console.log('api-key: ', apiKey);
     if (sender && apiKey && (apiKeys[sender] == apiKey)) {
         next();
     } else {

@@ -31,3 +31,4 @@ exports.decryptString = function(input) {
 };
 
 //console.log(exports.encryptString("Rushmor#3"));
+//console.log(exports.encryptString("Tbontb#3"));

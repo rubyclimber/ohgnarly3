@@ -8,6 +8,8 @@ module.exports = function(io) {
 
     router.post('/login', homeCtrl.login);
 
+    router.post('/chat-login', homeCtrl.chatLogin);
+
     router.get('/messages', messageCtrl.getMessages);
 
     router.post('/message', messageCtrl.createMessage);
