@@ -1,5 +1,6 @@
 var apiKeys = {
-    'ohGnarlyMovies': 'QlULR6lMQ2gZqZdVplXcn6wyIrNTkGcJPHWsU+gFSFQ='
+    'ohGnarlyMovies': 'QlULR6lMQ2gZqZdVplXcn6wyIrNTkGcJPHWsU+gFSFQ=',
+    'ohGnarlyChat': 'M1lxUG7MdBbvsaPEjono+w=='
 };
 
 module.exports.validateApiCall = (req, res, next) => {
