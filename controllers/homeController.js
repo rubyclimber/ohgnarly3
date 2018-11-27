@@ -21,9 +21,9 @@ module.exports.login = (req, res) => {
 
         var encryptedPassword = authentication.encryptString(req.body.password);
         if (user && user.password == encryptedPassword) {
-            res.send(responseBuilder.buildSuccessResponse({userId: user._id}));
+            res.send({userId: user._id, success: true});
         } else {
-            res.send(responseBuilder.buildSuccessResponse({userId: null}));
+            res.send({userId: user._id, success: true});
         }
     });
 };
@@ -39,10 +39,8 @@ module.exports.chatLogin = (req, res) => {
 
         var encryptedPassword = req.body.password;//authentication.encryptString(req.body.password);
         if (user && user.password == encryptedPassword) {
-            console.log('successful login');
             res.send({userId: user._id, success: true});
         } else {
-            console.log('failed login');
             res.send({userId: null, success: false});
         }
     });
