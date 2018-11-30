@@ -22,7 +22,7 @@ module.exports.createMovie = (req, res) => {
         director: req.body.director,
         imdbid: req.body.imdbid,
         wishlist: req.body.wishlist,
-        format: req.body.format || formats.formats.DVD,
+        format: req.body.format,
         poster: req.body.poster
     });
     movie.save();
