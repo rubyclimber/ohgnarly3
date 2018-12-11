@@ -23,7 +23,7 @@ mongoose.connect("mongodb://dbuser:OhGnarly123@ds157187.mlab.com:57187/ohgnarly"
  * Create express app and set middleware components
  */
 let app = express();
-var port = normalizePort(process.env.PORT || '3001');
+var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 let io = socket(app.listen(port));

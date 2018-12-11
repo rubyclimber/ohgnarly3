@@ -23,7 +23,7 @@ module.exports.login = (req, res) => {
         if (user && user.password == encryptedPassword) {
             res.send({userId: user._id, success: true});
         } else {
-            res.send({userId: user._id, success: true});
+            res.send({userId: null, success: false});
         }
     });
 };
