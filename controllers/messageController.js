@@ -10,6 +10,16 @@ module.exports = function(io) {
                 return console.error(err);
             }
 
+            messages = messages.sort((msg1, msg2) => {
+                if (msg1.createdAt < msg2.createdAt) {
+                    return -1;
+                } else if (msg1.createMessage > msg2.createdAt) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+
             res.send(messages);
         });
     };
