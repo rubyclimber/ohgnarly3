@@ -11,9 +11,9 @@ module.exports = function(io) {
             }
 
             messages = messages.sort((msg1, msg2) => {
-                if (msg1.createdAt < msg2.createdAt) {
+                if (msg1.createdAt.getTime() < msg2.createdAt.getTime()) {
                     return -1;
-                } else if (msg1.createMessage > msg2.createdAt) {
+                } else if (msg1.createdAt.getTime() > msg2.createdAt.getTime()) {
                     return 1;
                 } else {
                     return 0;
