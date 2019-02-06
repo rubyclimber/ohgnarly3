@@ -13,5 +13,4 @@ var userContactSchema = new Schema({
     }
 });
 
-//module.exports = mongoose.model("UserContact", userContactSchema, "UserContacts");
-export const userContactSchema = mongoose.model("UserContact", userContactSchema, "UserContacts");
+module.exports = mongoose.model("UserContact", userContactSchema, "UserContacts");

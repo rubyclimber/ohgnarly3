@@ -1,10 +1,10 @@
-import * as User from '../models/user';
-import * as Category from '../models/category';
-import * as UserContact from '../models/userContact';
-import * as PendingUser from '../models/pendingUser';
-import * as ChatUser from '../models/chatUser';
-import * as authentication from '../services/authentication';
-import * as responseBuilder from '../infrastructure/response-builder';
+var User = require('../models/user');
+var Category = require('../models/category');
+var UserContact = require('../models/userContact');
+var PendingUser = require('../models/pendingUser');
+var ChatUser = require('../models/chatUser');
+const authentication = require('../services/authentication');
+const responseBuilder = require('../infrastructure/response-builder');
 
 module.exports.showHomePage = (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));

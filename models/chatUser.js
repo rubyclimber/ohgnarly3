@@ -13,4 +13,4 @@ var chatUserSchema = new Schema({
     createdAt: {type: Date, default: Date.now}
 });
 
-export const chatUserModel = mongoose.model("ChatUser", chatUserSchema, "ChatUsers");
+module.exports = mongoose.model("ChatUser", chatUserSchema, "ChatUsers");

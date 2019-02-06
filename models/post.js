@@ -13,4 +13,4 @@ var postSchema = new Schema({
     modifiedAt: {type: Date, default: Date.now}
 });
 
-export const postModel = mongoose.model("Post", postSchema, "Posts");
+module.exports = mongoose.model("Post", postSchema, "Posts");

@@ -1,5 +1,5 @@
-import * as Show from '../models/show';
-const imdb = require('imdb-api');
+var Show = require('../models/show');
+var imdb = require('imdb-api');
 
 module.exports.getUserShows = function(req, res) {
     console.log(req.params.userId);

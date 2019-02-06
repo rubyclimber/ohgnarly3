@@ -9,4 +9,4 @@ var conversationSchema = new Schema({
     userId2: String
 });
 
-export const conversationModel = mongoose.model("Conversation", conversationSchema, "Conversations");
+module.exports = mongoose.model("Conversation", conversationSchema, "Conversations");
