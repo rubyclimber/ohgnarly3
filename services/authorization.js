@@ -3,7 +3,7 @@ var apiKeys = {
     'ohGnarlyChat': 'M1lxUG7MdBbvsaPEjono+w=='
 };
 
-module.exports.validateApiCall = (req, res, next) => {
+export const validateApiCall = (req, res, next) => {
     var sender = req.headers['sender'];
     var apiKey = req.headers['api-key'];
     if (sender && apiKey && (apiKeys[sender] == apiKey)) {

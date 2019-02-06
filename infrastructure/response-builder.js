@@ -1,7 +1,7 @@
 const successMessage = 'Success!';
 const validationMessage = 'Request failed validation. See validationErrors for more details.';
 
-module.exports.buildSuccessResponse = (content) => {
+export const buildSuccessResponse = (content) => {
     return {
         content: content,
         success: true,
@@ -10,7 +10,7 @@ module.exports.buildSuccessResponse = (content) => {
     }
 };
 
-module.exports.buildValidationResponse = (validationErrors) => {
+export const buildValidationResponse = (validationErrors) => {
     return {
         content: null,
         success: false,
@@ -19,7 +19,7 @@ module.exports.buildValidationResponse = (validationErrors) => {
     }
 };
 
-module.exports.buildExceptionResponse = (exception) => {
+export const buildExceptionResponse = (exception) => {
     return {
         content: null,
         success: false,

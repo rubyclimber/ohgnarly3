@@ -1,6 +1,7 @@
 /**
  * Import dependencies
  */
+import * as authorization from './services/authorization';
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -10,7 +11,6 @@ const favicon = require('serve-favicon');
 const mongoose = require('mongoose');
 const debug = require('debug')('ohgnarly:server');
 const socket = require('socket.io');
-const authorization = require('./services/authorization');
 const cors = require('cors');
 
 /**
@@ -23,7 +23,7 @@ mongoose.connect("mongodb://dbuser:OhGnarly123@ds157187.mlab.com:57187/ohgnarly"
  * Create express app and set middleware components
  */
 let app = express();
-var port = normalizePort(process.env.PORT || '3001');
+var port = normalizePort(process.env.PORT || '1985');
 app.set('port', port);
 
 let io = socket(app.listen(port));
@@ -37,7 +37,8 @@ let index = require('./routes/index')(io);
 let api = require('./routes/api')(io);
 const messageCtrl = require('./controllers/messageController')(io);
 
-const allowedOrigins = ['http://localhost:3000', 'http://ohgnarly.herokuapp.com', 'https://ohgnarly.herokuapp.com']
+const allowedOrigins = ['http://localhost:3000', 'http://ohgnarly.herokuapp.com', 'https://ohgnarly.herokuapp.com'];
+
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin){

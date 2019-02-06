@@ -3,14 +3,14 @@ var crypto = require('crypto');
 var password = "Tbontb#3";
 var algorithm = "aes192";
 
-exports.encryptString = function(input) {
+export const encryptString = function(input) {
     var cipher = crypto.createCipher(algorithm, password);
     var encrypted = cipher.update(input, 'utf8', 'base64');
     encrypted += cipher.final('base64');
     return encrypted;
 };
 
-exports.decryptString = function(input) {
+export const decryptString = function(input) {
     var decipher = crypto.createDecipher(algorithm, password);
     var decrypted = '';
 

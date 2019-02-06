@@ -9,4 +9,4 @@ var categorySchema = new Schema({
     createdAt: {type: Date, default: Date.now}
 });
 
-module.exports = mongoose.model("Category", categorySchema, "Categories");
+export const categoryModel = mongoose.model("Category", categorySchema, "Categories");

@@ -10,4 +10,4 @@ var pendingUserSchema = new Schema({
     createdAt: {type: Date, default: Date.now}
 });
 
-module.exports = mongoose.model("PendingUser", pendingUserSchema, "PendingUsers");
+export const pendingUserModel = mongoose.model("PendingUser", pendingUserSchema, "PendingUsers");

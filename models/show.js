@@ -13,4 +13,4 @@ var showSchema = new Schema({
     imdbid: String
 });
 
-module.exports = mongoose.model("Show", showSchema, "Shows");
+export const showModel = mongoose.model("Show", showSchema, "Shows");

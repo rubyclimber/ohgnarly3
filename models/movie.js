@@ -19,4 +19,4 @@ var movieSchema = new Schema({
     poster: String
 });
 
-module.exports = mongoose.model("Movie", movieSchema, "Movies");
+export const movieModel = mongoose.model("Movie", movieSchema, "Movies");

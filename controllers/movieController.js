@@ -1,6 +1,6 @@
-var Movie = require('../models/movie');
-var imdb = require('imdb-api');
-var formats = require('../infrastructure/formats');
+import * as Movie from '../models/movie';
+import * as formats from '../infrastructure/formats';
+const imdb = require('imdb-api');
 
 module.exports.getMovies = (req, res) => {
     Movie.find({userId: req.params.userId}).exec((err, movies) => {
