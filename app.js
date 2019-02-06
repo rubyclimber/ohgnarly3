@@ -12,12 +12,13 @@ const debug = require('debug')('ohgnarly:server');
 const socket = require('socket.io');
 const authorization = require('./services/authorization');
 const cors = require('cors');
+const settings = require('./settings');
 
 /**
  * Initialize mongodb connection
  */
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://dbuser:OhGnarly123@ds157187.mlab.com:57187/ohgnarly", {useMongoClient: true});
+mongoose.connect(settings.connectionStrings.ohGnarly, {useMongoClient: true});
 
 /**
  * Create express app and set middleware components
@@ -37,7 +38,7 @@ let index = require('./routes/index')(io);
 let api = require('./routes/api')(io);
 const messageCtrl = require('./controllers/messageController')(io);
 
-const allowedOrigins = ['http://localhost:3000', 'http://ohgnarly.herokuapp.com', 'https://ohgnarly.herokuapp.com']
+const allowedOrigins = settings.allowedOrigins;
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin){
