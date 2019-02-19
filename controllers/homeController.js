@@ -5,6 +5,7 @@ var PendingUser = require('../models/pendingUser');
 var ChatUser = require('../models/chatUser');
 const authentication = require('../services/authentication');
 const responseBuilder = require('../infrastructure/response-builder');
+const authorization = require('../services/authorization');
 
 module.exports.showHomePage = (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -39,9 +40,9 @@ module.exports.chatLogin = (req, res) => {
 
         var encryptedPassword = req.body.password;//authentication.encryptString(req.body.password);
         if (user && user.password == encryptedPassword) {
-            res.send({userId: user._id, success: true});
+            res.send({userId: user._id, success: true, apiKey: authorization.getApiKey('ohGnarlyChat')});
         } else {
-            res.send({userId: null, success: false});
+            res.send({userId: null, success: false, apiKey: ''});
         }
     });
 };

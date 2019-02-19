@@ -57,7 +57,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(authorization.validateApiCall);
+app.use(/\/((?!chat-login).)*/, authorization.validateApiCall);
 app.use('/api', api);
 app.use('/', index);
 

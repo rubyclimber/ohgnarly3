@@ -1,6 +1,6 @@
 var apiKeys = {
-    'ohGnarlyMovies': 'QlULR6lMQ2gZqZdVplXcn6wyIrNTkGcJPHWsU+gFSFQ=',
-    'ohGnarlyChat': 'M1lxUG7MdBbvsaPEjono+w=='
+    ohGnarlyMovies: 'QlULR6lMQ2gZqZdVplXcn6wyIrNTkGcJPHWsU+gFSFQ=',
+    ohGnarlyChat: 'M1lxUG7MdBbvsaPEjono+w=='
 };
 
 module.exports.validateApiCall = (req, res, next) => {
@@ -12,4 +12,8 @@ module.exports.validateApiCall = (req, res, next) => {
         res.status(500);
         res.send({message: 'You do not have access to this API!'});
     }
-}
+};
+
+module.exports.getApiKey = (application) => {
+    return apiKeys[application];
+};
