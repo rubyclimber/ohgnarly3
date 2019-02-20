@@ -57,7 +57,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(/\/((?!chat-login).)*/, authorization.validateApiCall);
+app.use(/\/((?!chat-login|users|categories).)*/, authorization.validateApiCall);
 app.use('/api', api);
 app.use('/', index);
 
@@ -78,7 +78,6 @@ function normalizePort(val) {
   
     return false;
 }
-  
 
 function onError(error) {
   if (error.syscall !== 'listen') {
@@ -104,7 +103,6 @@ function onError(error) {
   }
 }
 
-
 function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string'
@@ -112,7 +110,6 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
-
 
 function onSocketConnect(socket) {
   socket.on('server-message', messageCtrl.addMessage);
