@@ -71,7 +71,7 @@ module.exports.createUser = (req, res) => {
 };
 
 module.exports.getUsers = (req, res) => {
-    User.find().exec((err, users) => {
+    ChatUser.find().exec((err, users) => {
         if (err) {
             return console.error(err);
         }
