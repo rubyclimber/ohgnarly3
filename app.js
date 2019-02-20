@@ -38,6 +38,8 @@ let index = require('./routes/index')(io);
 let api = require('./routes/api')(io);
 const messageCtrl = require('./controllers/messageController')(io);
 
+const authUrlRegExp = new RegExp(`\/((?!${settings.authExclusionUrls.join('|')})np.)*`);
+
 const allowedOrigins = settings.allowedOrigins;
 app.use(cors({
     origin: (origin, callback) => {
@@ -57,7 +59,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(/\/((?!chat-login|users|categories).)*/, authorization.validateApiCall);
+app.use(authUrlRegExp, authorization.validateApiCall);
 app.use('/api', api);
 app.use('/', index);
 

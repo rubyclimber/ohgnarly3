@@ -7,3 +7,9 @@ module.exports.allowedOrigins = [
     'http://ohgnarly.herokuapp.com', 
     'https://ohgnarly.herokuapp.com'
 ];
+
+module.exports.authExclusionUrls = [
+    'chat-login',
+    'users',
+    'catergories'
+];
