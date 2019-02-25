@@ -1,18 +1,36 @@
 const mongoose = require('mongoose');
 const User = require('./models/user');
+const authentication = require('./services/authentication');
+const fs = require('fs');
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://dbuser:OhGnarly123@ds157187.mlab.com:57187/ohgnarly', {useMongoClient: true});
+//mongoose.Promise = global.Promise;
+//mongoose.connect('mongodb://gnarly_user:Gnarly234@ds149353.mlab.com:49353/gnarly_test', {useMongoClient: true});
 
-User.find().exec((err, users) => {
-    if (err) {
-        return console.error(err);
+function longDivision(divisor, dividend) {
+    let result = '';
+    //let dividend = 1;
+    while (true) {
+        if (dividend < divisor) {
+            dividend *= 10;
+            result += result.length == 0 ? '0.' : '0';
+            continue;
+        }
+
+        result += Math.floor(dividend / divisor);
+        dividend = Math.floor(dividend % divisor) * 10; //set dividend to remainder times 10 for next step
+        
+        if (dividend == 0 || result.length > 100) {
+            break;
+        }
     }
-    //console.log(users);
 
-    mongoose.connection.close();
+    return parseFloat(result);
+}
+
+console.log(longDivision(11, 99));
+
+fs.writeFile('api-key.txt', authentication.encryptString('TinkerTailorSoldierSpartan'), () => {
+    console.log('done');
 });
 
-let x = Array(10).fill(0);
-
-console.log(x);
+console.log('done');

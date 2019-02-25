@@ -12,7 +12,17 @@ const debug = require('debug')('ohgnarly:server');
 const socket = require('socket.io');
 const authorization = require('./services/authorization');
 const cors = require('cors');
-const settings = require('./settings');
+
+/**
+ * Load settings by environment
+ */
+let environment = process.env.NODE_ENV || 'development';
+let settings;
+if (environment === 'production') {
+    settings = require('./settings');
+} else {
+    settings = require(`./settings.${environment}`);
+}
 
 /**
  * Initialize mongodb connection

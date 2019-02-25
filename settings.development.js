@@ -1,10 +1,9 @@
 module.exports.connectionStrings = {
-    ohGnarly: 'mongodb://dbuser:OhGnarly123@ds157187.mlab.com:57187/ohgnarly'
+    ohGnarly: 'mongodb://gnarly_user:Gnarly234@ds149353.mlab.com:49353/gnarly_test'
 };
 
 module.exports.allowedOrigins = [
-    'http://ohgnarly.herokuapp.com', 
-    'https://ohgnarly.herokuapp.com'
+    'http://localhost:3000'
 ];
 
 module.exports.authExclusionUrls = [

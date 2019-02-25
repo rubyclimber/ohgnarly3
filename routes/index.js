@@ -1,10 +1,11 @@
 module.exports = function(io) {
-    var express = require('express');
-    var router = express.Router();
-    var homeCtrl = require('../controllers/homeController');
-    var showCtrl = require('../controllers/showController');
-    var movieCtrl = require('../controllers/movieController');
-    var messageCtrl = require('../controllers/messageController')(io);
+    const express = require('express');
+    const homeCtrl = require('../controllers/homeController');
+    const showCtrl = require('../controllers/showController');
+    const movieCtrl = require('../controllers/movieController');
+    const messageCtrl = require('../controllers/messageController')(io);
+
+    const router = express.Router();
 
     router.post('/login', homeCtrl.login);
 

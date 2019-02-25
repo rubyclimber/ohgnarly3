@@ -38,7 +38,7 @@ module.exports.chatLogin = (req, res) => {
             return;
         }
 
-        var encryptedPassword = req.body.password;//authentication.encryptString(req.body.password);
+        var encryptedPassword = authentication.encryptString(req.body.password);
         if (user && user.password == encryptedPassword) {
             res.send({userId: user._id, success: true, apiKey: authorization.getApiKey('ohGnarlyChat')});
         } else {
