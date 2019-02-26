@@ -11,3 +11,5 @@ module.exports.authExclusionUrls = [
     'users',
     'catergories'
 ];
+
+module.exports.socketUrl = 'http://localhost:1985';

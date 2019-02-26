@@ -15,4 +15,4 @@ module.exports.authExclusionUrls = [
     'catergories'
 ];
 
-module.exports.socketUrl = 'https://ohgnarly3.herokuapp.com';
+module.exports.socketUrl = 'https://ohgnarly3-staging.herokuapp.com';
