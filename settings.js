@@ -4,9 +4,7 @@ module.exports.connectionStrings = {
 
 module.exports.allowedOrigins = [
     'http://ohgnarly.herokuapp.com', 
-    'https://ohgnarly.herokuapp.com',
-    'http://ohgnarly-staging.herokuapp.com',
-    'https://ohgnarly-staging.herokuapp.com'
+    'https://ohgnarly.herokuapp.com'
 ];
 
 module.exports.authExclusionUrls = [

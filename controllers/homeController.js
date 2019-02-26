@@ -6,6 +6,7 @@ var ChatUser = require('../models/chatUser');
 const authentication = require('../services/authentication');
 const responseBuilder = require('../infrastructure/response-builder');
 const settingsFactory = require('../services/settingsFactory');
+const bcrypt = require('bcrypt');
 
 const settings = settingsFactory.getSettings();
 
@@ -40,12 +41,18 @@ module.exports.chatLogin = (req, res) => {
             return;
         }
 
-        var encryptedPassword = authentication.encryptString(req.body.password);
-        if (user && user.password == encryptedPassword) {
-            res.send({userId: user._id, success: true, socketUrl: settings.socketUrl});
-        } else {
-            res.send({userId: null, success: false, socketUrl: ''});
+        if (!user) {
+            res.status(500);
+            res.send(responseBuilder.buildExceptionResponse('User not found!'));
         }
+
+        bcrypt.compare(req.body.password, user.password, (err, isSame) => {
+            if (isSame) {
+                res.send({userId: user._id, success: true, socketUrl: settings.socketUrl});
+            } else {
+                res.send({userId: null, success: false, socketUrl: ''});
+            }
+        });
     });
 };
 

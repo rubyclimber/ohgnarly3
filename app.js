@@ -12,17 +12,14 @@ const debug = require('debug')('ohgnarly:server');
 const socket = require('socket.io');
 const authorization = require('./services/authorization');
 const cors = require('cors');
+const settingsFactory = require('./services/settingsFactory');
+const origin = require('./services/origin');
+
 
 /**
- * Load settings by environment
+ * Load settings
  */
-let environment = process.env.NODE_ENV || 'development';
-let settings;
-if (environment === 'production') {
-    settings = require('./settings');
-} else {
-    settings = require(`./settings.${environment}`);
-}
+let settings = settingsFactory.getSettings();
 
 /**
  * Initialize mongodb connection
@@ -34,43 +31,30 @@ mongoose.connect(settings.connectionStrings.ohGnarly, {useMongoClient: true});
  * Create express app and set middleware components
  */
 let app = express();
-var port = normalizePort(process.env.PORT || '1985');
+let port = normalizePort(process.env.PORT || '1985');
 app.set('port', port);
 
-let io = socket(app.listen(port));
+/**
+ * Create socket io object and create socket dependencies.
+ */
+const io = socket(app.listen(port));
+const index = require('./routes/index')(io);
+const messageCtrl = require('./controllers/messageController')(io);
 
 app.on('error', onError);
 app.on('listening', onListening);
 
 io.on('connection', onSocketConnect);
 
-let index = require('./routes/index')(io);
-let api = require('./routes/api')(io);
-const messageCtrl = require('./controllers/messageController')(io);
+//const authUrlRegExp = new RegExp(`\/((?!${settings.authExclusionUrls.join('|')})np.)*`);
 
-const authUrlRegExp = new RegExp(`\/((?!${settings.authExclusionUrls.join('|')})np.)*`);
-
-const allowedOrigins = settings.allowedOrigins;
-app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin){
-            return callback(null, true);
-        }
-
-        if (allowedOrigins.indexOf(origin) === -1) {
-            return callback(new Error('Invalid origin', false));
-        }
-
-        return callback(null, true);
-    }
-}));
+app.use(cors(origin));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(authUrlRegExp, authorization.validateApiCall);
-app.use('/api', api);
+app.use(authorization.validateApiCall);
 app.use('/', index);
 
 
