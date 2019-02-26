@@ -1,5 +1,5 @@
 module.exports.connectionStrings = {
-    ohGnarly: 'mongodb://gnarly_user:Gnarly234@ds149353.mlab.com:49353/gnarly_test'
+    ohGnarly: 'mongodb://gnarly_user:Gnarly123@ds123500.mlab.com:23500/gnarly_staging'
 };
 
 module.exports.allowedOrigins = [
