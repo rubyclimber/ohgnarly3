@@ -1,4 +1,4 @@
-module.exports.formats = {
+const formats = {
     DVD: 'DVD',
     Bluray: 'Blu-ray',
     Bluray3d: 'Blu-ray 3D',
@@ -8,3 +8,7 @@ module.exports.formats = {
     DigitalUhd: 'Digital UHD',
     VHS: 'VHS'
 };
+
+module.exports.getFormats = () => {
+    return formats;
+}

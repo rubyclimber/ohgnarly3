@@ -4,7 +4,7 @@ var UserContact = require('../models/userContact');
 var PendingUser = require('../models/pendingUser');
 var ChatUser = require('../models/chatUser');
 const authentication = require('../services/authentication');
-const responseBuilder = require('../infrastructure/response-builder');
+const responseBuilder = require('../services/response');
 const settingsFactory = require('../services/settingsFactory');
 const bcrypt = require('bcrypt');
 

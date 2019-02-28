@@ -1,6 +1,6 @@
 var Movie = require('../models/movie');
 var imdb = require('imdb-api');
-var formats = require('../infrastructure/formats');
+var format = require('../services/format');
 
 module.exports.getMovies = (req, res) => {
     Movie.find({userId: req.params.userId}).exec((err, movies) => {
@@ -73,8 +73,9 @@ module.exports.deleteMovie = (req, res) => {
 module.exports.getFormats = (req, res) => {
     var results = [];
     
-    for (let format in formats.formats) {
-        results.push(formats.formats[format]);
+    const formats = format.getFormats();
+    for (let f in formats) {
+        results.push(formats[f]);
     }
 
     res.send(results);

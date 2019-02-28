@@ -55,6 +55,16 @@ module.exports = function(io) {
                     return console.error(error);
                 }
 
+                messages = messages.sort((msg1, msg2) => {
+                    if (msg1.createdAt.getTime() < msg2.createdAt.getTime()) {
+                        return -1;
+                    } else if (msg1.createdAt.getTime() > msg2.createdAt.getTime()) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                });
+
                 res.send(messages);
             });
         } else if(searchText) {
@@ -62,6 +72,16 @@ module.exports = function(io) {
                 if (error) {
                     return console.error(error);
                 }
+
+                messages = messages.sort((msg1, msg2) => {
+                    if (msg1.createdAt.getTime() < msg2.createdAt.getTime()) {
+                        return -1;
+                    } else if (msg1.createdAt.getTime() > msg2.createdAt.getTime()) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                });
 
                 res.send(messages);
             });

@@ -3,7 +3,6 @@
  */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var formats = require('../infrastructure/formats');
 
 var movieSchema = new Schema({
     title: String,
