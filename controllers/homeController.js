@@ -56,6 +56,14 @@ module.exports.chatLogin = (req, res) => {
     });
 };
 
+module.exports.getLoggedInUsers = (req, res) => {
+    User.find((err, users) => {
+        console.log(users);
+
+        res.send('complete');
+    });
+};
+
 module.exports.createUser = (req, res) => {
     PendingUser.find().exec((err, users) => {
         if (err) {
