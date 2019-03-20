@@ -4,7 +4,8 @@ module.exports.connectionStrings = {
 
 module.exports.allowedOrigins = [
     'http://ohgnarly-staging.herokuapp.com',
-    'https://ohgnarly-staging.herokuapp.com'
+    'https://ohgnarly-staging.herokuapp.com',
+    'http://localhost:3000'
 ];
 
 module.exports.authExclusionUrls = [
