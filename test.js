@@ -6,8 +6,22 @@ const bcrypt = require('bcrypt');
 const Message = require('./models/message');
 const settings = require('./settings');
 
+/**
+ * Initialize mongodb connection
+ */
 mongoose.Promise = global.Promise;
 mongoose.connect(settings.connectionStrings.ohGnarly, {useMongoClient: true});
+
+Post.find().exec((err, posts) => {
+    if (err) {
+        return console.error(err);
+    }
+
+    console.log(posts[0].postId);
+});
+
+//console.log(longDivision(11, 99));
+console.log('done');
 
 function longDivision(divisor, dividend) {
     let result = '';
