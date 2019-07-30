@@ -4,9 +4,10 @@ const authentication = require('./services/authentication');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 const Message = require('./models/message');
+const settings = require('./settings');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://gnarly_user:Gnarly234@ds149353.mlab.com:49353/gnarly_test', {useMongoClient: true});
+mongoose.connect(settings.connectionStrings.ohGnarly, {useMongoClient: true});
 
 function longDivision(divisor, dividend) {
     let result = '';
@@ -35,8 +36,16 @@ var message = new Message({
     userId: '2'
 });
 
-message.save();
+Message.find({createdAt: {$gt: new Date(Date.now() - (7 * 24 * 60 * 60 * 1000))}})
+    //.skip(25)
+    .limit(25)
+    .sort("-createdAt")
+    .exec((err, messages) => {
+    if (err) {
+        return console.error(err);
+    }
 
-//console.log(longDivision(11, 99));
-
-console.log('done');
+    messages.reverse().forEach(msg => {
+        console.log(msg.createdAt)
+    });
+});

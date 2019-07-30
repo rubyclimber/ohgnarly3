@@ -5,7 +5,17 @@ module.exports = function(io) {
     const User = require('../models/user');
 
     exports.getMessages = function(req, res) {
-        Message.find({createdAt: {$gt: new Date(Date.now() - (24 * 60 * 60 * 1000))}}).exec((err, messages) => {
+        let pageNumber = parseInt(req.query.pageNumber);
+        if (!pageNumber) {
+            pageNumber = 0;
+        }
+        Message
+            .find({createdAt: {$gt: new Date(Date.now() - (30 * 24 * 60 * 60 * 1000))}})
+            .sort("-createdAt")
+            .skip(pageNumber * 25)
+            .limit(25)
+            .exec((err, messages) => {
+            
             if (err) {
                 return console.error(err);
             }
