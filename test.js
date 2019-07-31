@@ -37,7 +37,6 @@ var message = new Message({
 });
 
 Message.find({createdAt: {$gt: new Date(Date.now() - (7 * 24 * 60 * 60 * 1000))}})
-    //.skip(25)
     .limit(25)
     .sort("-createdAt")
     .exec((err, messages) => {

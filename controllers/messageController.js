@@ -9,8 +9,7 @@ module.exports = function(io) {
         if (!pageNumber) {
             pageNumber = 0;
         }
-        Message
-            .find({createdAt: {$gt: new Date(Date.now() - (30 * 24 * 60 * 60 * 1000))}})
+        Message.find({createdAt: {$gt: new Date(Date.now() - (14 * 24 * 60 * 60 * 1000))}})
             .sort("-createdAt")
             .skip(pageNumber * 25)
             .limit(25)
