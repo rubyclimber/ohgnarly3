@@ -110,14 +110,6 @@ module.exports.getMovie = (req, res) => {
 module.exports.updateMovies = (req, res) => {
     Movie.find().exec((err, movies) => {
         for (let movie of movies) {
-            // imdb.getById(movie.imdbid, {apiKey: '1e37ecbf'}).then(onlineMovie => {
-            //     movie.poster = onlineMovie.poster;
-            //     let query = {userId: movie.userId, imdbid: movie.imdbid};
-            //     let update = {poster: onlineMovie.poster};
-            //     Movie.updateOne(query, update, () => {
-            //         console.log(movie.title + ' updated!');
-            //     });
-            // });
             console.log(movie.poster);
         }
 
