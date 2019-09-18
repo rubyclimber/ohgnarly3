@@ -4,6 +4,7 @@ module.exports = function(io) {
     const showCtrl = require('../controllers/showController');
     const movieCtrl = require('../controllers/movieController');
     const messageCtrl = require('../controllers/messageController')(io);
+    const personCtrl = require('../controllers/personController');
 
     const router = express.Router();
 
@@ -68,6 +69,8 @@ module.exports = function(io) {
     router.post('/create-user', homeCtrl.createUser);
 
     router.get('/active-users', homeCtrl.getLoggedInUsers);
+
+    router.post('/person', personCtrl.createPerson)
 
     //router.post('/update-movies', movieCtrl.updateMovies);
 
