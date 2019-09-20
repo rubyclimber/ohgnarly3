@@ -1,7 +1,6 @@
 const Person = require('../models/person')
 
 module.exports.createPerson = (req, res) => {
-    console.log(req.body);
     if (!req.body.records) {
         res.send({success: false});
         return;
@@ -20,3 +19,16 @@ module.exports.createPerson = (req, res) => {
     }
     res.send({success: true, ids: ids});
 };
+
+module.exports.deletePerson = (req, res) => {
+    var personId = req.params.personId;
+    Person.findById(personId).exec((err, person) => {
+        if (err) {
+           console.error(err);
+           res.status(500);
+        } 
+
+        person.remove();
+        res.send(person);
+    });
+}

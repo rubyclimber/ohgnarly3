@@ -72,6 +72,8 @@ module.exports = function(io) {
 
     router.post('/person', personCtrl.createPerson)
 
+    router.delete('/person/:personId', personCtrl.deletePerson)
+
     //router.post('/update-movies', movieCtrl.updateMovies);
 
     return router;
