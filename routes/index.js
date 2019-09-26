@@ -1,6 +1,6 @@
 module.exports = function(io) {
     const express = require('express');
-    const homeController = require('../controllers/homeController')();
+    const HomeController = require('../controllers/homeController');
     const showCtrl = require('../controllers/showController');
     const movieCtrl = require('../controllers/movieController');
     const messageCtrl = require('../controllers/messageController')(io);
@@ -9,6 +9,7 @@ module.exports = function(io) {
     const personCtrl = require('../controllers/personController');
 
     const router = express.Router();
+    const homeController = new HomeController(require('../models/category'))
 
     router.post('/login', loginController.login);
 

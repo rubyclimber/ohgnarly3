@@ -1,17 +1,14 @@
-module.exports = () => {
-    let exports = {};
-    const Category = require('../models/category');
-
-    exports.showHomePage = (req, res) => {
+function HomeController(category) {
+    this.showHomePage = (req, res) => {
         res.sendFile(path.join(__dirname, 'public', 'index.html'));
     };
 
-    exports.ping = (req, res) => {
+    this.ping = (req, res) => {
         res.send(req.body);
     };
 
-    exports.getCategories = (req, res) => {
-        Category.find().exec((err, categories) => {
+    this.getCategories = (req, res) => {
+        category.find().exec((err, categories) => {
             if (err) {
                 return console.error(err);
             }
@@ -20,11 +17,11 @@ module.exports = () => {
         });
     };
 
-    exports.logObject = (req, res) => {
+    this.logObject = (req, res) => {
         console.log(req.body.logObject);
 
         res.send({ success: true });
     };
-
-    return exports;
 }
+
+module.exports = HomeController;
