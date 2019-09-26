@@ -1,28 +1,30 @@
 module.exports = function(io) {
     const express = require('express');
-    const homeCtrl = require('../controllers/homeController');
+    const homeController = require('../controllers/homeController')();
     const showCtrl = require('../controllers/showController');
     const movieCtrl = require('../controllers/movieController');
     const messageCtrl = require('../controllers/messageController')(io);
+    const userController = require('../controllers/userController')()
+    const loginController = require('../controllers/loginController')()
     const personCtrl = require('../controllers/personController');
 
     const router = express.Router();
 
-    router.post('/login', homeCtrl.login);
+    router.post('/login', loginController.login);
 
-    router.post('/chat-login', homeCtrl.chatLogin);
+    router.post('/chat-login', loginController.chatLogin);
 
     router.get('/messages', messageCtrl.getMessages);
 
     router.post('/message', messageCtrl.createMessage);
 
-    router.get('/users', homeCtrl.getUsers);
+    router.get('/users', userController.getUsers);
 
-    router.get('/categories', homeCtrl.getCategories);
+    router.get('/categories', homeController.getCategories);
 
-    router.get('/new-movie', homeCtrl.createUser);
+    router.get('/new-movie', userController.createUser);
 
-    router.get('/contacts/:userId', homeCtrl.getContacts);
+    router.get('/contacts/:userId', userController.getContacts);
 
     router.get('/movies/:userId', movieCtrl.getMovies);
 
@@ -52,29 +54,30 @@ module.exports = function(io) {
 
     router.get('/conversations/:userId', messageCtrl.getConversations);
 
-    router.get('/user/:userId', homeCtrl.getUser);
+    router.get('/user/:userId', userController.getUser);
 
     router.get('/conversation/:conversationId', messageCtrl.getConversation);
 
     router.get('/conversation/messages/:conversationId', messageCtrl.getConverationMessages);
 
-    router.post('/log', homeCtrl.logObject);
+    router.post('/log', homeController.logObject);
 
     router.get('/movie/:userId/:imdbid', movieCtrl.getMovie);
 
-    router.post('/check-username', homeCtrl.checkUsername);
+    router.post('/check-username', userController.checkUsername);
 
-    router.post('/check-email', homeCtrl.checkEmailAddress);
+    router.post('/check-email', userController.checkEmailAddress);
 
-    router.post('/create-user', homeCtrl.createUser);
+    router.post('/create-user', userController.createUser);
 
-    router.get('/active-users', homeCtrl.getLoggedInUsers);
+    router.get('/active-users', userController.getLoggedInUsers);
 
     router.post('/person', personCtrl.createPerson)
 
     router.delete('/person/:personId', personCtrl.deletePerson)
 
     //router.post('/update-movies', movieCtrl.updateMovies);
+    router.post('/ping', homeController.ping)
 
     return router;
 }

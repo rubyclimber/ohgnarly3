@@ -9,6 +9,6 @@ const formats = {
     VHS: 'VHS'
 };
 
-module.exports.getFormats = () => {
+ module.exports.getFormats = () => {
     return formats;
 }

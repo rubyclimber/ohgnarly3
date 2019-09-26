@@ -10,7 +10,9 @@ var userSchema = new Schema({
     firstName: String,
     lastName: String,
     emailAddress: String,
-    createdAt: {type: Date, default: Date.now}
+    createdAt: {type: Date, default: Date.now},
+    lastLoginAt: Date,
+    lastLogoutAt: Date
 });
 
 module.exports = mongoose.model("User", userSchema, "Users");
