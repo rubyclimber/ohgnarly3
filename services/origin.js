@@ -8,7 +8,7 @@ module.exports.origin = (origin, callback) => {
     }
 
     if (allowedOrigins.indexOf(origin) === -1) {
-        return callback(new Error('Invalid origin', false));
+        return callback(new Error('Invalid origin'), false);
     }
 
     return callback(null, true);

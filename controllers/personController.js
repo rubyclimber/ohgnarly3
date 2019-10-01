@@ -31,4 +31,4 @@ module.exports.deletePerson = (req, res) => {
         person.remove();
         res.send(person);
     });
-}
+};
