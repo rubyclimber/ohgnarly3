@@ -114,13 +114,7 @@ module.exports.getCategories = (req, res) => {
             return console.error(err);
         }
 
-        res.send(categories.map(category => {
-            return {
-                id: category._id,
-                description: category.categoryDesc,
-                createdAt: category.createdAt
-            };
-        }));
+        res.send(categories);
     });
 };
 
