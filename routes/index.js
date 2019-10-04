@@ -80,5 +80,7 @@ module.exports = function(io) {
     //router.post('/update-movies', movieCtrl.updateMovies);
     router.post('/ping', homeController.ping)
 
+    router.get('/messages/all', messageCtrl.migrateMessages);
+
     return router;
 }

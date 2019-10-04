@@ -183,5 +183,12 @@ module.exports = function(io) {
         });
     }
 
+    exports.migrateMessages = (req, res) => {
+        Message.find({}).sort('createdAt').exec((err, messages) => {
+            console.log(err);
+            res.send(messages);
+        });
+    };
+
     return exports;
 };
