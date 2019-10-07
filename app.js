@@ -25,7 +25,7 @@ let settings = settingsFactory.getSettings();
  * Initialize mongodb connection
  */
 mongoose.Promise = global.Promise;
-mongoose.connect(settings.connectionStrings.ohGnarly, {useMongoClient: true});
+mongoose.connect(settings.connectionStrings.ohGnarly, { useNewUrlParser: true, useUnifiedTopology: true });
 
 /**
  * Create express app and set middleware components
