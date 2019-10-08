@@ -124,7 +124,7 @@ module.exports = () => {
     };
 
     exports.getUsers = (req, res) => {
-        ChatUser.find().exec((err, users) => {
+        User.find().exec((err, users) => {
             if (err) {
                 return console.error(err);
             }
