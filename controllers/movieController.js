@@ -81,6 +81,17 @@ module.exports.getFormats = (req, res) => {
     res.send(results);
 };
 
+module.exports.getAllMovies = (req, res) => {
+    Movie.find({}).exec((err, movies) => {
+        if (err) {
+            console.error(err);
+            res.send(err);
+        }
+
+        res.send(movies);
+    })
+};
+
 module.exports.updateMovie = (req, res) => {
     var query = {userId: req.body.userId, imdbid: req.body.imdbid};
     var update = req.body.update;

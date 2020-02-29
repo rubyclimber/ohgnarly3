@@ -82,5 +82,9 @@ module.exports = function(io) {
 
     router.get('/messages/all', messageCtrl.migrateMessages);
 
+    router.get('/messages/all', messageCtrl.migrateMessages);
+    
+    router.get('/movies', movieCtrl.getAllMovies);
+
     return router;
 }
