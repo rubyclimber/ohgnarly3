@@ -12,20 +12,19 @@ const debug = require('debug')('ohgnarly:server');
 const socket = require('socket.io');
 const authorization = require('./services/authorization');
 const cors = require('cors');
-const settingsFactory = require('./services/settingsFactory');
 const origin = require('./services/origin');
 
 
 /**
  * Load settings
  */
-let settings = settingsFactory.getSettings();
+let settings = require('./services/settings')
 
 /**
  * Initialize mongodb connection
  */
 mongoose.Promise = global.Promise;
-mongoose.connect(settings.connectionStrings.ohGnarly, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(settings.connectionStrings().ohgnarly, { useNewUrlParser: true, useUnifiedTopology: true });
 
 /**
  * Create express app and set middleware components

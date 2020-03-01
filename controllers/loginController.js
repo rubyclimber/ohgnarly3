@@ -5,9 +5,7 @@ module.exports = () => {
     const authentication = require('../services/authentication');
     const responseBuilder = require('../services/response');
     const bcrypt = require('bcryptjs');
-    const settingsFactory = require('../services/settingsFactory');
-
-    const settings = settingsFactory.getSettings();
+    const settings = require('../services/settings')
 
     exports.login = (req, res) => {
         let username = req.body.userName.toLowerCase();

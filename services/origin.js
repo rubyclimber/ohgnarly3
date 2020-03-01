@@ -1,6 +1,6 @@
-const settingsFactory = require('./settingsFactory');
+const settings = require('./settings');
 
-const allowedOrigins = settingsFactory.getSettings().allowedOrigins;
+const allowedOrigins = settings.allowedOrigins();
 
 module.exports.origin = (origin, callback) => {
     if (!origin){
