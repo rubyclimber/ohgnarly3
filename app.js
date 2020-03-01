@@ -13,6 +13,9 @@ const socket = require('socket.io');
 const authorization = require('./services/authorization');
 const cors = require('cors');
 const origin = require('./services/origin');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 
 /**

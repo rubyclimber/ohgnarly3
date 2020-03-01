@@ -12,7 +12,9 @@ module.exports.authExclusionUrls = () => {
     return process.env.AUTH_EXCLUSION_URLS.split('|');
 };
 
-module.exports.socketUrl = process.env.SOCKET_URL;
+module.exports.socketUrl = () => {
+    return process.env.SOCKET_URL;
+};
 
 module.exports.cryptoPassword = () => {
     return process.env.CRYPTO_PASSWORD;

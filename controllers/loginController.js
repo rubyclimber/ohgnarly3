@@ -41,7 +41,7 @@ module.exports = () => {
 
             bcrypt.compare(req.body.password, user.password, (err, isSame) => {
                 if (isSame) {
-                    res.send({ userId: user._id, success: true, socketUrl: settings.socketUrl });
+                    res.send({ userId: user._id, success: true, socketUrl: settings.socketUrl() });
                 } else {
                     res.send({ userId: null, success: false, socketUrl: '' });
                 }
