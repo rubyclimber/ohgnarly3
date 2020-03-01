@@ -6,7 +6,6 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
-const favicon = require('serve-favicon');
 const mongoose = require('mongoose');
 const debug = require('debug')('ohgnarly:server');
 const socket = require('socket.io');
@@ -51,7 +50,6 @@ io.on('connection', onSocketConnect);
 //const authUrlRegExp = new RegExp(`\/((?!${settings.authExclusionUrls.join('|')})np.)*`);
 
 app.use(cors(origin));
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
