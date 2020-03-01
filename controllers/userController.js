@@ -4,7 +4,6 @@ module.exports = () => {
     const UserContact = require('../models/userContact');
     const PendingUser = require('../models/pendingUser');
     const ChatUser = require('../models/chatUser');
-    const authentication = require('../services/authentication');
 
 
     exports.checkUsername = (req, res) => {
@@ -48,24 +47,6 @@ module.exports = () => {
 
         user.save();
         res.send({ success: true });
-    };
-
-    exports.updateUserPasswords = (req, res) => {
-        User.find().exec((err, users) => {
-            for (let user of users) {
-                console.log(user.userName);
-                let query = { _id: user._id };
-                let update = { password: authentication.encryptString(user.password) };
-
-                User.findOneAndUpdate(query, update, (err) => {
-                    if (err) {
-                        return console.error(err);
-                    }
-
-                    console.log('done');
-                })
-            }
-        });
     };
 
     exports.getContacts = (req, res) => {

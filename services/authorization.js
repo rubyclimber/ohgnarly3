@@ -1,8 +1,6 @@
-var apiKeys = {
-    ohGnarlyMovies: 'QlULR6lMQ2gZqZdVplXcn6wyIrNTkGcJPHWsU+gFSFQ=',
-    ohGnarlyChat: 'M1lxUG7MdBbvsaPEjono+w==',
-    messageParser: 'E9Z0mMwRHiAoyGM+u+DMjzSQNkiUzpdv4PH70V2E5Y4='
-};
+const settings = require('./settings')
+
+var apiKeys = settings.apiKeys();
 
 module.exports.validateApiCall = (req, res, next) => {
     var sender = req.headers['sender'];

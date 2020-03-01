@@ -1,16 +1,16 @@
-var exports = module.exports = {};
-var crypto = require('crypto');
-var password = "Tbontb#3";
-var algorithm = "aes192";
+const crypto = require('crypto');
+const settings = require('./settings');
+var password = settings.cryptoPassword();
+var algorithm = settings.cryptoAlgorithm();
 
-exports.encryptString = function(input) {
+module.exports.encryptString = function(input) {
     var cipher = crypto.createCipher(algorithm, password);
     var encrypted = cipher.update(input, 'utf8', 'base64');
     encrypted += cipher.final('base64');
     return encrypted;
 };
 
-exports.decryptString = function(input) {
+module.exports.decryptString = function(input) {
     var decipher = crypto.createDecipher(algorithm, password);
     var decrypted = '';
 
