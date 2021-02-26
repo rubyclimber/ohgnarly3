@@ -1,65 +1,38 @@
+const authentication = require('./services/authentication')
 const mongoose = require('mongoose');
 const User = require('./models/user');
-const authentication = require('./services/authentication');
-const fs = require('fs');
-const bcrypt = require('bcrypt');
 const Message = require('./models/message');
-const settings = require('./settings');
+const Movie = require('./models/movie');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
+const settings = require('./services/settings')
+
+console.log('decrypting')
 console.log(authentication.decryptString('xG4vyiQNjH0KbcfaXP8ORA=='));
-/**
- * Initialize mongodb connection
- */
+console.log('done')
+
+// /**
+//  * Initialize mongodb connection
+//  */
 // mongoose.Promise = global.Promise;
-// mongoose.connect(settings.connectionStrings.ohGnarly, {useMongoClient: true});
-
-// Post.find().exec((err, posts) => {
+// console.log(settings.connectionStrings().ohgnarly);
+// mongoose.connect(settings.connectionStrings().ohgnarly, { useNewUrlParser: true, useUnifiedTopology: true });
+//
+// Movie.find().exec((err, movies) => {
 //     if (err) {
 //         return console.error(err);
 //     }
-
-//     console.log(posts[0].postId);
-// });
-
-// //console.log(longDivision(11, 99));
-// console.log('done');
-
-// function longDivision(divisor, dividend) {
-//     let result = '';
-//     //let dividend = 1;
-//     while (true) {
-//         if (dividend < divisor) {
-//             dividend *= 10;
-//             result += result.length == 0 ? '0.' : '0';
-//             continue;
-//         }
-
-//         result += Math.floor(dividend / divisor);
-//         dividend = Math.floor(dividend % divisor) * 10; //set dividend to remainder times 10 for next step
-        
-//         if (dividend == 0 || result.length > 100) {
-//             break;
+//
+//     let count = 0
+//     for (let movie of movies) {
+//         if (movie.userId == '5d9756c017fe3303be698a73') {
+//             //movie.userId = '5d9ce113b3608e16726bc0eb';
+//             //movie.save();
+//             count++;
 //         }
 //     }
-
-//     return parseFloat(result);
-// }
-
-// var message = new Message({
-//     messageBody: 'Hey',
-//     createdAt: new Date(new Date().setDate(13)),
-//     userId: '2'
-// });
-
-// Message.find({createdAt: {$gt: new Date(Date.now() - (7 * 24 * 60 * 60 * 1000))}})
-//     .limit(25)
-//     .sort("-createdAt")
-//     .exec((err, messages) => {
-//     if (err) {
-//         return console.error(err);
-//     }
-
-//     messages.reverse().forEach(msg => {
-//         console.log(msg.createdAt)
-//     });
+//     console.log(count);
+//     mongoose.connection.close();
 // });

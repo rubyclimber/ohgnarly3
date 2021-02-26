@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const settings = require('./settings');
-var password = settings.cryptoPassword();
-var algorithm = settings.cryptoAlgorithm();
+const password = settings.cryptoPassword();
+const algorithm = settings.cryptoAlgorithm();
 
 module.exports.encryptString = function(input) {
     var cipher = crypto.createCipher(algorithm, password);

@@ -4,6 +4,7 @@ module.exports = () => {
     const UserContact = require('../models/userContact');
     const PendingUser = require('../models/pendingUser');
     const ChatUser = require('../models/chatUser');
+    const auth = require('../services/authentication');
 
 
     exports.checkUsername = (req, res) => {
