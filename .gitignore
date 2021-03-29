@@ -2,3 +2,8 @@
 .DS_Store
 /*.env
 /.idea/
+coverage/
+/dist/
+/dist/**/*.js
+/dist/**/*.js.map
+api-key.txt
