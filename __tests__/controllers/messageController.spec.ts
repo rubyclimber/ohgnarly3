@@ -25,7 +25,7 @@ describe('MessageController', () => {
         });
 
         it('should return messages', async () => {
-            messageRepository.getRecentMessagesByPage = jest.fn().mockReturnValueOnce(Promise.resolve([message2, message1]));
+            messageRepository.getRecentMessagesByPage = jest.fn().mockResolvedValue([message2, message1]);
 
             await messageController.getMessages(req, res);
 
@@ -33,7 +33,7 @@ describe('MessageController', () => {
         });
 
         it('should raise error if lookup fails', async () => {
-            messageRepository.getRecentMessagesByPage = jest.fn().mockReturnValueOnce(Promise.reject(new Error('failure')));
+            messageRepository.getRecentMessagesByPage = jest.fn().mockRejectedValue(new Error('failure'));
 
             try {
                 await messageController.getMessages(req, res);
@@ -49,7 +49,7 @@ describe('MessageController', () => {
             req = {body: {messageBody: 'hello', userId: '123'}} as Request;
             res.status = jest.fn().mockReturnValueOnce(res);
             res.end = jest.fn();
-            messageRepository.addMessage = jest.fn().mockReturnValueOnce(Promise.resolve(message));
+            messageRepository.addMessage = jest.fn().mockResolvedValue(message);
 
             await messageController.createMessage(req, res);
 
@@ -59,7 +59,7 @@ describe('MessageController', () => {
         });
 
         it('should raise an error if insert fails', async () => {
-            messageRepository.addMessage = jest.fn().mockReturnValueOnce(Promise.reject(new Error('failure')));
+            messageRepository.addMessage = jest.fn().mockRejectedValue(new Error('failure'));
 
             try {
                 await messageController.createMessage(req, res);
@@ -88,7 +88,7 @@ describe('MessageController', () => {
             });
 
             it('should return matching messages for text search', async () => {
-                messageRepository.searchByText = jest.fn().mockReturnValueOnce([message2, message1]);
+                messageRepository.searchByText = jest.fn().mockResolvedValue([message2, message1]);
 
                 await messageController.searchMessages(req, res);
 
@@ -96,13 +96,12 @@ describe('MessageController', () => {
             });
 
             it('should raise error if text search fails', async () => {
-                messageRepository.searchByText = jest.fn().mockReturnValueOnce(new Error());
+                const error = new Error('text search failure');
+                messageRepository.searchByText = jest.fn().mockRejectedValue(error);
 
-                try {
-                    await messageController.searchMessages(req, res);
-                } catch (err) {
-                    expect(res.send).toHaveBeenCalledWith(err);
-                }
+                await messageController.searchMessages(req, res);
+
+                expect(res.send).toHaveBeenCalledWith(error);
             });
         });
 
@@ -114,7 +113,7 @@ describe('MessageController', () => {
             it('should return messages for valid date', async () => {
                 const messages = [message2, message1];
 
-                messageRepository.searchByDate = jest.fn().mockReturnValueOnce(messages);
+                messageRepository.searchByDate = jest.fn().mockResolvedValue(messages);
 
                 await messageController.searchMessages(req, res);
 
@@ -123,20 +122,19 @@ describe('MessageController', () => {
         });
 
         it('should raise error if date search fails', async () => {
-            messageRepository.searchByDate = jest.fn().mockReturnValueOnce(new Error());
+            const error = new Error('date search failed')
+            messageRepository.searchByDate = jest.fn().mockRejectedValue(error);
 
-            try {
-                await messageController.searchMessages(req, res);
-            } catch (err) {
-                expect(res.send).toHaveBeenCalledWith(err);
-            }
+            await messageController.searchMessages(req, res);
+
+            expect(res.send).toHaveBeenCalledWith(error);
         });
     });
 
     describe('addMessage', () => {
         it('should insert a new message', async () => {
             const message = {messageBody: 'hello', userId: '123'} as Message;
-            messageRepository.addMessage = jest.fn().mockReturnValueOnce(Promise.resolve(message));
+            messageRepository.addMessage = jest.fn().mockResolvedValue(message);
 
             await messageController.addMessage(message);
 

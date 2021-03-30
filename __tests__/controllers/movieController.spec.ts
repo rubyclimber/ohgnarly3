@@ -24,7 +24,7 @@ describe('MovieController', () => {
 
         it('should return movies for user', async () => {
             const movies = [] as MovieDocument[];
-            movieRepository.getMoviesForUser = jest.fn().mockReturnValueOnce(Promise.resolve(movies));
+            movieRepository.getMoviesForUser = jest.fn().mockResolvedValue(movies);
 
             await movieController.getMovies(req, res);
 
@@ -33,7 +33,7 @@ describe('MovieController', () => {
 
         it('should return error if lookup fails', async () => {
             let error = new Error();
-            movieRepository.getMoviesForUser = jest.fn().mockReturnValueOnce(Promise.reject(error));
+            movieRepository.getMoviesForUser = jest.fn().mockRejectedValue(error);
 
             await movieController.getMovies(req, res);
 
@@ -45,7 +45,7 @@ describe('MovieController', () => {
         it('should create a new movie', async () => {
             req.body = {title: 'Sleepers'} as Movie;
             const expected = {title: 'Sleepers'} as MovieDocument;
-            movieRepository.add = jest.fn().mockReturnValueOnce(Promise.resolve(expected));
+            movieRepository.add = jest.fn().mockResolvedValue(expected);
 
             await movieController.createMovie(req, res);
 
@@ -54,7 +54,7 @@ describe('MovieController', () => {
 
         it('should raise an error if insert fails', async () => {
             const expected = new Error('failure');
-            movieRepository.add = jest.fn().mockReturnValueOnce(Promise.reject(expected));
+            movieRepository.add = jest.fn().mockRejectedValue(expected);
 
             await movieController.createMovie(req, res);
 
@@ -66,7 +66,7 @@ describe('MovieController', () => {
         it('should return movie details', async () => {
             req.params = {onlineId: 'imdb-id'};
             const expected = {} as MovieDocument;
-            movieRepository.getOnlineDetails = jest.fn().mockReturnValue(Promise.resolve(expected));
+            movieRepository.getOnlineDetails = jest.fn().mockResolvedValue(expected);
 
             await movieController.getMovieDetails(req, res);
 
@@ -84,7 +84,7 @@ describe('MovieController', () => {
         it('should raise an error if lookup fails', async () => {
             req.params = {onlineId: 'imdb-id'};
             const expected = new Error('failure');
-            movieRepository.getOnlineDetails = jest.fn().mockReturnValueOnce(Promise.reject(expected));
+            movieRepository.getOnlineDetails = jest.fn().mockRejectedValue(expected);
 
             await movieController.getMovieDetails(req, res);
 
@@ -98,7 +98,7 @@ describe('MovieController', () => {
             const searchResults = {results: [{}], totalresults: 1} as any as SearchResults;
             const expected = {success: true, results: searchResults.results, totalResults: searchResults.totalresults}
 
-            movieRepository.searchOnline = jest.fn().mockReturnValue(Promise.resolve(searchResults));
+            movieRepository.searchOnline = jest.fn().mockResolvedValue(searchResults);
 
             await movieController.searchMovies(req, res);
 
@@ -109,7 +109,7 @@ describe('MovieController', () => {
             req.params = {title: 'my-title'};
             const error = new Error();
 
-            movieRepository.searchOnline = jest.fn().mockReturnValue(Promise.reject(error));
+            movieRepository.searchOnline = jest.fn().mockRejectedValue(error);
 
             await movieController.searchMovies(req, res);
 
@@ -129,7 +129,7 @@ describe('MovieController', () => {
         it('should delete a movie', async () => {
             req.params = {userId: '123', imdbid: '456'};
 
-            movieRepository.delete = jest.fn().mockReturnValue(Promise.resolve(true));
+            movieRepository.delete = jest.fn().mockResolvedValue(true);
 
             await movieController.deleteMovie(req, res);
 
@@ -162,7 +162,7 @@ describe('MovieController', () => {
         it('should update movie record', async () => {
             req.body = {userId: '123', imdbid: '456', update: {} as Movie};
             let expected = {} as MovieDocument;
-            movieRepository.update = jest.fn().mockReturnValue(Promise.resolve(expected));
+            movieRepository.update = jest.fn().mockResolvedValue(expected);
 
             await movieController.updateMovie(req, res);
 
@@ -172,7 +172,7 @@ describe('MovieController', () => {
         it('should raise exception if update fails', async () => {
             req.body = {userId: '123', imdbid: '456', update: {} as Movie};
             const error = new Error('update failed');
-            movieRepository.update = jest.fn().mockReturnValue(Promise.reject(error));
+            movieRepository.update = jest.fn().mockRejectedValue(error);
 
             await movieController.updateMovie(req, res);
 
@@ -185,7 +185,7 @@ describe('MovieController', () => {
             req.body = {userId: '123', imdbid: '345'}
             const movie = {} as MovieDocument;
 
-            movieRepository.get = jest.fn().mockReturnValue(Promise.resolve(movie));
+            movieRepository.get = jest.fn().mockResolvedValue(movie);
 
             await movieController.getMovie(req, res);
 
@@ -196,7 +196,7 @@ describe('MovieController', () => {
             req.body = {userId: '', imdbid: ''};
             const error = new Error('lookup failed');
 
-            movieRepository.get = jest.fn().mockReturnValue(Promise.reject(error));
+            movieRepository.get = jest.fn().mockRejectedValue(error);
 
             await movieController.getMovie(req, res);
 

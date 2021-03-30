@@ -23,7 +23,7 @@ describe('UserController', () => {
         });
 
         it('should return true if user name is available', async () => {
-            mockRepoFn.mockReturnValueOnce(Promise.resolve(undefined));
+            mockRepoFn.mockResolvedValue(undefined);
 
             await userController.checkUsername(req, res, jest.fn());
 
@@ -31,7 +31,7 @@ describe('UserController', () => {
         });
 
         it('should return false if user name not is available', async () => {
-            mockRepoFn.mockReturnValueOnce(Promise.resolve({} as UserDocument));
+            mockRepoFn.mockResolvedValue({} as UserDocument);
 
             await userController.checkUsername(req, res, jest.fn());
 
@@ -39,14 +39,12 @@ describe('UserController', () => {
         });
 
         it('should raise error if lookup fails', async () => {
-            mockRepoFn.mockReturnValueOnce(Promise.reject(new Error('data lookup failed')));
+            const error = new Error('data lookup failed');
+            mockRepoFn.mockRejectedValue(error);
 
-            try {
-                await userController.checkUsername(req, res, jest.fn());
-            } catch (err) {
-                expect(res.send).toHaveBeenCalledWith(err);
-            }
+            await userController.checkUsername(req, res, jest.fn());
 
+            expect(res.send).toHaveBeenCalledWith(error);
         });
     });
 
@@ -57,7 +55,7 @@ describe('UserController', () => {
         });
 
         it('should return true if email is available', async () => {
-            mockRepoFn.mockReturnValueOnce(Promise.resolve(undefined));
+            mockRepoFn.mockResolvedValue(undefined);
 
             await userController.checkEmailAddress(req, res, jest.fn());
 
@@ -65,7 +63,7 @@ describe('UserController', () => {
         });
 
         it('should return false if email is not available', async () => {
-            mockRepoFn.mockReturnValueOnce(Promise.resolve({} as UserDocument));
+            mockRepoFn.mockResolvedValue({} as UserDocument);
 
             await userController.checkEmailAddress(req, res, jest.fn());
 
@@ -73,14 +71,12 @@ describe('UserController', () => {
         });
 
         it('should raise error if lookup fails', async () => {
-            mockRepoFn.mockReturnValueOnce(Promise.reject(new Error('lookup failed')));
+            const error = new Error('lookup failed');
+            mockRepoFn.mockRejectedValue(error);
 
-            try {
-                await userController.checkEmailAddress(req, res, jest.fn());
-            } catch (err) {
-                expect(res.send).toHaveBeenCalledWith(err);
-            }
+            await userController.checkEmailAddress(req, res, jest.fn());
 
+            expect(res.send).toHaveBeenCalledWith(error);
         });
     });
 
@@ -177,7 +173,7 @@ describe('UserController', () => {
     });
 
     describe('getUsers', () => {
-        it ('should return all users', async () => {
+        it('should return all users', async () => {
             const user = {} as UserDocument;
             userRepository.getAllUsers = jest.fn().mockReturnValueOnce(Promise.resolve([user, user]));
 

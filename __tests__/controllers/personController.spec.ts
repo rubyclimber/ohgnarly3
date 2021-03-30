@@ -28,8 +28,8 @@ describe('PersonController', () => {
 
             personRepository.add = jest
                 .fn()
-                .mockReturnValueOnce({_id: '123'} as PersonDocument)
-                .mockReturnValueOnce({_id: '456'} as PersonDocument);
+                .mockResolvedValue({_id: '123'} as PersonDocument)
+                .mockResolvedValue({_id: '456'} as PersonDocument);
 
             await personController.createPerson(req, res);
 
@@ -60,7 +60,7 @@ describe('PersonController', () => {
         it('it should delete a person', async () => {
             const person = {} as Person;
 
-            personRepository.delete = jest.fn().mockReturnValueOnce(Promise.resolve(person));
+            personRepository.delete = jest.fn().mockResolvedValue(person);
 
             await personController.deletePerson(req, res);
 
@@ -68,7 +68,7 @@ describe('PersonController', () => {
         });
 
         it('it should return null if no person found', async () => {
-            personRepository.delete = jest.fn().mockReturnValueOnce(Promise.resolve(undefined));
+            personRepository.delete = jest.fn().mockResolvedValue(undefined);
 
             await personController.deletePerson(req, res);
 
