@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import {User, UserDocument, userSchema} from '../models/user';
+import {User, UserDocument, userModel, userSchema} from '../models/user';
 
-const userModel = mongoose.model("User", userSchema, "Users");
+
 const chatUserModel = mongoose.model("ChatUser", userSchema, "ChatUsers");
 export const PendingUserModel = mongoose.model("PendingUser", userSchema, "PendingUsers");
 
@@ -10,6 +10,13 @@ export class UserRepository {
         const user = await userModel.findOne({userName: userName}).exec() as UserDocument;
         return user;
     };
+
+    updateUser = async(userName: string, user: User) => {
+        await userModel
+            .findOneAndUpdate({userName: userName}, user, {useFindAndModify: false})
+            .exec();
+        return await this.getUserByUserName(userName);
+    }
 
     getAllUsers = async () => {
         return await userModel.find().exec() as UserDocument[];

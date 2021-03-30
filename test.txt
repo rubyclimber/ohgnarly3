@@ -30,6 +30,9 @@ Wonder
 The Wrong Guys
 Zodiac
 
+CONNECTION_STRING="mongodb://dbuser:OhGnarly123@cluster0-shard-00-00-hds1u.mongodb.net:27017,cluster0-shard-00-01-hds1u.mongodb.net:27017,cluster0-shard-00-02-hds1u.mongodb.net:27017/ohgnarly?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority"
+CONNECTION_STRING="mongodb://username:abc123SonarPlzD0ntMarkMe@localhost:27017/test_db"
+
 Evan Anema
 Estate Planning Solutions
 605-906-8118

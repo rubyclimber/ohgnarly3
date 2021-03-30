@@ -1,7 +1,7 @@
 /**
  * Created by asmitty on 3/16/17.
  */
-import {Schema, Document} from 'mongoose';
+import mongoose, {Schema, Document} from 'mongoose';
 
 export const userSchema = new Schema<UserDocument>({
     userName: String,
@@ -26,3 +26,5 @@ export interface User {
 }
 
 export interface UserDocument extends User, Document {}
+
+export const userModel = mongoose.model("User", userSchema, "Users");

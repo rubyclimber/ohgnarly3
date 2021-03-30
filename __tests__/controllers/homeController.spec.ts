@@ -37,10 +37,9 @@ describe('HomeController', () => {
 
     describe('getCategories', () => {
         let categoryRepository: CategoryRepository;
-        let mockGetAll: jest.Mock;
+
         beforeEach(() => {
             categoryRepository = new CategoryRepository();
-            mockGetAll = categoryRepository.getAll = jest.fn();
             homeController = new HomeController(categoryRepository);
         });
 
@@ -49,7 +48,7 @@ describe('HomeController', () => {
             const res = {send: jest.fn()} as any as Response;
             const categories = [{}, {}];
 
-            mockGetAll.mockReturnValueOnce(Promise.resolve(categories));
+            categoryRepository.getAll = jest.fn().mockResolvedValue(categories);
 
             await homeController.getCategories(req, res, jest.fn());
 
@@ -59,14 +58,13 @@ describe('HomeController', () => {
         it('should return an error if data error occurs', async () => {
             const req = {} as Request;
             const res = {send: jest.fn()} as any as Response;
+            const error = new Error('this is my expected error');
 
-            mockGetAll.mockReturnValueOnce(Promise.reject(new Error('this is my expected error')));
+            categoryRepository.getAll = jest.fn().mockRejectedValue(error);
 
-            try {
-                await homeController.getCategories(req, res, jest.fn());
-            } catch (err) {
-                expect(res.send).toHaveBeenCalledWith(err);
-            }
+            await homeController.getCategories(req, res, jest.fn());
+
+            expect(res.send).toHaveBeenCalledWith(error);
         });
     });
 });

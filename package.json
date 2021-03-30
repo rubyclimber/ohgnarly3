@@ -4,11 +4,14 @@
   "description": "ohgnarly.com",
   "main": "./bin/www",
   "scripts": {
-    "test": "npm-run-all mongoup run-tests mongodown",
     "start": "node app.js",
-    "mongoup": "docker-compose up",
-    "run-tests": "jest --coverage",
-    "mongodown": "docker-compose down"
+    "test": "npm-run-all -c test-create test-start test-run test-stop test-rm",
+    "print-version": "node -v",
+    "test-start": "docker-compose start",
+    "test-create": "docker-compose create",
+    "test-run": "jest --coverage",
+    "test-stop": "docker-compose stop",
+    "test-rm": "docker-compose rm -f"
   },
   "repository": {
     "type": "git",

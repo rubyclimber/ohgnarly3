@@ -12,108 +12,81 @@ describe('LoginController', () => {
     let res: Response;
     let loginController: LoginController;
     let userRepository: UserRepository;
-    let mockGet: jest.Mock<Promise<UserDocument>>;
+    let user: UserDocument;
 
     beforeEach(() => {
         process.env.CRYPTO_ALGORITHM = 'aes192';
         process.env.CRYPTO_PASSWORD = "ThisIsATestPassword";
+        req = {body: {userName: 'user-name', password: 'invalid-password'}} as any as Request;
         res = {send: jest.fn()} as any as Response;
+        user = {password: '$This*Is&The&Encrypted%Password', _id: '123'} as UserDocument;
         userRepository = new UserRepository();
         loginController = new LoginController(userRepository);
     });
 
     describe('login', () => {
-        beforeEach(() => {
-            mockGet = userRepository.getUserByUserName = jest.fn()
-        });
-
         it('should return success with valid login info', async () => {
-            req = {body: {userName: 'user-name', password: 'my-password'}} as any as Request;
-            const user = {password: 'NUAmkOMxqfcDXSFzcG0xRA==', _id: '123'} as UserDocument;
+            userRepository.getUserByUserName = jest.fn().mockResolvedValue(user);
+            bcrypt.compare = jest.fn().mockResolvedValue(true);
 
-            mockGet.mockReturnValueOnce(Promise.resolve(user));
-
-            await loginController.login(req, res, jest.fn());
+            await loginController.login(req, res);
 
             expect(res.send).toHaveBeenCalledWith({userId: '123', success: true})
         });
 
         it('should return failure if password is invalid', async () => {
-            req = {body: {userName: 'user-name', password: 'invalid-password'}} as any as Request;
-            const user = {password: 'NUAmkOMxqfcDXSFzcG0xRA==', _id: '123'} as UserDocument;
+            userRepository.getUserByUserName = jest.fn().mockResolvedValue(user);
+            bcrypt.compare = jest.fn().mockResolvedValue(false);
 
-            mockGet.mockReturnValueOnce(Promise.resolve(user));
-
-            await loginController.login(req, res, jest.fn());
+            await loginController.login(req, res);
 
             expect(res.send).toHaveBeenCalledWith({userId: null, success: false});
         });
 
         it('should return throw error if username is invalid', async () => {
-            req = {body: {userName: 'user-name', password: 'invalid-password'}} as any as Request;
             res.status = jest.fn();
             const error = new Error('user is not found');
             const expectedResponse = ResponseBuilder.buildExceptionResponse(error)
 
-            mockGet.mockReturnValueOnce(Promise.reject(error));
+            userRepository.getUserByUserName = jest.fn().mockRejectedValue(error);
 
-            try {
-                await loginController.login(req, res, jest.fn());
-            } catch (err) {
-                expect(res.status).toHaveBeenCalledWith(500);
-                expect(res.send).toHaveBeenCalledWith(expectedResponse);
-            }
+            await loginController.login(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(500);
+            expect(res.send).toHaveBeenCalledWith(expectedResponse);
         });
     });
 
     describe('chatLogin', () => {
-        beforeEach(() => {
-            mockGet = userRepository.getChatUser = jest.fn()
-        });
-
         it('should return success with valid chat login info', async () => {
-            req = {body: {userName: 'user-name', password: 'my-password'}} as any as Request;
-            const user = {password: 'NUAmkOMxqfcDXSFzcG0xRA==', _id: '123'} as UserDocument;
+            userRepository.getChatUser = jest.fn().mockResolvedValue(user);
+            bcrypt.compare = jest.fn().mockResolvedValue(true);
 
-            mockGet.mockReturnValueOnce(Promise.resolve(user));
-            bcrypt.compare = jest.fn().mockImplementation((a, b, c) => {
-                c(null, true);
-            });
-
-            await loginController.chatLogin(req, res, jest.fn());
+            await loginController.chatLogin(req, res);
 
             expect(res.send).toHaveBeenCalledWith({userId: '123', success: true})
         });
 
         it('should return failure if chat password is invalid', async () => {
-            req = {body: {userName: 'user-name', password: 'invalid-password'}} as any as Request;
-            const user = {password: 'NUAmkOMxqfcDXSFzcG0xRA==', _id: '123'} as UserDocument;
+            userRepository.getChatUser = jest.fn().mockResolvedValue(user);
+            bcrypt.compare = jest.fn().mockResolvedValue(false);
 
-            mockGet.mockReturnValueOnce(Promise.resolve(user));
-            bcrypt.compare = jest.fn().mockImplementation((a, b, c) => {
-                c(null, false);
-            });
-
-
-            await loginController.chatLogin(req, res, jest.fn());
+            await loginController.chatLogin(req, res);
 
             expect(res.send).toHaveBeenCalledWith({userId: null, success: false, socketUrl: ''});
         });
 
         it('should return throw error if chat username is invalid', async () => {
-            req = {body: {userName: 'user-name', password: 'invalid-password'}} as any as Request;
             res.status = jest.fn();
             const error = new Error('user is not found');
             const expectedResponse = ResponseBuilder.buildExceptionResponse(error)
 
-            mockGet.mockReturnValueOnce(Promise.reject(error));
+            userRepository.getChatUser = jest.fn().mockRejectedValue(error);
 
-            try {
-                await loginController.chatLogin(req, res, jest.fn());
-            } catch (err) {
-                expect(res.status).toHaveBeenCalledWith(500);
-                expect(res.send).toHaveBeenCalledWith(expectedResponse);
-            }
+            await loginController.chatLogin(req, res);
+
+            expect(res.status).toHaveBeenCalledWith(500);
+            expect(res.send).toHaveBeenCalledWith(expectedResponse);
         });
     });
 });

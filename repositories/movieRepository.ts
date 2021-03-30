@@ -24,7 +24,7 @@ export class MovieRepository {
 
     update = async (userId: string, imdbid: string, movie: Movie) => {
         const query = {userId: userId, imdbid: imdbid};
-        await MovieModel.findOneAndUpdate(query, movie).exec();
+        await MovieModel.findOneAndUpdate(query, movie, {useFindAndModify: false}).exec();
         return await this.get(userId, imdbid);
     }
 

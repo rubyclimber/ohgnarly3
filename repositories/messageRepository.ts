@@ -10,9 +10,9 @@ export class MessageRepository {
             .exec() as MessageDocument[];
     };
 
-    addMessage = (message: Message) => {
+    addMessage = async (message: Message) => {
         const added = new MessageModel(message);
-        return added.save() as any as MessageDocument;
+        return await added.save() as any as MessageDocument;
     };
 
     searchByText = async (searchText: string) => {

@@ -1,6 +1,7 @@
 import {UserRepository} from '../../repositories/userRepository';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import {userModel} from "../../models/user";
 
 dotenv.config();
 
@@ -20,6 +21,33 @@ describe('userRepository', () => {
             expect(user.firstName).toEqual('Andrew');
             expect(user.lastName).toEqual('Smith');
             expect(user.emailAddress).toEqual('a.s@test.com');
+        });
+    });
+
+    describe('updateUser', () => {
+        beforeEach(async () => {
+            await userModel.insertMany([
+                {
+                    "userName": "fsmitty",
+                    "password": "pass7",
+                    "firstName": "Fritz",
+                    "lastName": "Smith",
+                    "emailAddress": "f.s@test.com"
+                }
+            ]);
+        });
+
+        it('should update the user data', async () => {
+            const user = await userRepository.getUserByUserName('fsmitty');
+            user.firstName = 'Freddie';
+
+            const updated = await userRepository.updateUser(user.userName, user);
+
+            expect(updated.firstName).toEqual('Freddie');
+        });
+
+        afterEach(async () => {
+            await userModel.deleteOne({userName: 'fsmitty'});
         });
     });
 
