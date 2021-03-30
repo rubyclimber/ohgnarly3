@@ -28,8 +28,8 @@ describe('PersonController', () => {
 
             personRepository.add = jest
                 .fn()
-                .mockResolvedValue({_id: '123'} as PersonDocument)
-                .mockResolvedValue({_id: '456'} as PersonDocument);
+                .mockResolvedValueOnce({_id: '123'} as PersonDocument)
+                .mockResolvedValueOnce({_id: '456'} as PersonDocument);
 
             await personController.createPerson(req, res);
 

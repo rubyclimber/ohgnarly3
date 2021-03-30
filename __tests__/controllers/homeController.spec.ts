@@ -29,7 +29,7 @@ describe('HomeController', () => {
             const req = {body: 'my-body'} as Request;
             const res = {send: jest.fn()} as any as Response;
 
-            await homeController.ping(req, res, jest.fn());
+            await homeController.ping(req, res);
 
             expect(res.send).toHaveBeenCalledWith(req.body);
         });
@@ -50,7 +50,7 @@ describe('HomeController', () => {
 
             categoryRepository.getAll = jest.fn().mockResolvedValue(categories);
 
-            await homeController.getCategories(req, res, jest.fn());
+            await homeController.getCategories(req, res);
 
             expect(res.send).toHaveBeenCalledWith(categories);
         });
@@ -62,7 +62,7 @@ describe('HomeController', () => {
 
             categoryRepository.getAll = jest.fn().mockRejectedValue(error);
 
-            await homeController.getCategories(req, res, jest.fn());
+            await homeController.getCategories(req, res);
 
             expect(res.send).toHaveBeenCalledWith(error);
         });

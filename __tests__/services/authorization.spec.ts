@@ -13,7 +13,6 @@ describe('Authorization', () => {
         it('it should return a valid api-key for a valid app name', () => {
             const appName = 'ohGnarlyChat';
 
-
             const apiKey = authorization.getApiKey(appName);
 
             expect(apiKey).toEqual('valid-api-key');

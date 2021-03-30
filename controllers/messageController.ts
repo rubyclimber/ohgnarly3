@@ -13,7 +13,7 @@ export class MessageController {
         this.messageRepository = messageRepository || new MessageRepository();
     }
 
-    getMessages = (req: Request, res: Response) => {
+    getMessages = async (req: Request, res: Response) => {
         let pageNumber = parseInt(stringifyParam(req.query.pageNumber)) || 0;
         const millisAgo = (14 * 24 * 60 * 60 * 1000);
         return this.messageRepository.getRecentMessagesByPage(millisAgo, pageNumber).then(messages => {
@@ -24,7 +24,7 @@ export class MessageController {
         });
     };
 
-    createMessage = (req: Request, res: Response) => {
+    createMessage = async (req: Request, res: Response) => {
         return this.messageRepository.addMessage(req.body).then(message => {
             this.io.emit('chat-message', message);
             return res.status(200).end();

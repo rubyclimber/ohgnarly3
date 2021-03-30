@@ -1,5 +1,5 @@
 import path from 'path';
-import {Request, RequestHandler, Response} from 'express';
+import {Request, Response} from 'express';
 import {CategoryRepository} from '../repositories/categoryRepository';
 
 export class HomeController {
@@ -13,15 +13,16 @@ export class HomeController {
         return res.sendFile(path.join(__dirname, 'public', 'index.html'));
     };
 
-    ping: RequestHandler = (req, res) => {
+    ping = async (req: Request, res: Response) => {
         res.send(req.body);
     };
 
-    getCategories: RequestHandler = (req, res) => {
-        this.categoryRepository.getAll().then(categories => {
-            res.send(categories);
-        }).catch(error => {
-            res.send(error);
-        });
+    getCategories = async (req: Request, res: Response) => {
+        try {
+            const categories = await this.categoryRepository.getAll();
+            return res.send(categories);
+        } catch (err) {
+            return res.send(err);
+        };
     };
 }

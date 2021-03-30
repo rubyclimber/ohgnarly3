@@ -1,4 +1,4 @@
-import {RequestHandler} from 'express';
+import {Request, Response} from 'express';
 import {UserDocument} from '../models/user';
 import {UserRepository} from '../repositories/userRepository';
 
@@ -9,20 +9,21 @@ export class UserController {
         this.userRepository = userRepository || new UserRepository();
     }
 
-    checkUsername: RequestHandler = (req, res) => {
-        const userName = req.body.username;
-        this.userRepository.getUserByUserName(userName).then((user: UserDocument) => {
+    checkUsername = async (req: Request, res: Response) => {
+        try {
+            const userName = req.body.username;
+            const user = await this.userRepository.getUserByUserName(userName);
             const response = {
                 isAvailable: !user
             };
 
             res.send(response);
-        }).catch(err => {
+        } catch (err) {
             return res.send(err);
-        });
+        }
     };
 
-    checkEmailAddress: RequestHandler = (req, res) => {
+    checkEmailAddress = async (req: Request, res: Response) => {
         const emailAddress = req.body.emailAddress;
         return this.userRepository.getUserByEmailAddress(emailAddress).then((user: UserDocument) => {
             const response = {
@@ -35,7 +36,7 @@ export class UserController {
         });
     };
 
-    getUser: RequestHandler = (req, res) => {
+    getUser = async (req: Request, res: Response) => {
         const userName = req.params.userName;
         return this.userRepository.getUserByUserName(userName).then((user: UserDocument) => {
             if (!user) {
@@ -48,7 +49,7 @@ export class UserController {
         });
     };
 
-    createUser: RequestHandler = (req, res) => {
+    createUser = async (req: Request, res: Response) => {
         return this.userRepository.getAllPendingUsers().then((users: UserDocument[]) => {
             if (users && users.length && users.length >= 20) {
                 return res.send({success: false});
@@ -64,7 +65,7 @@ export class UserController {
         });
     };
 
-    getUsers: RequestHandler = (req, res) => {
+    getUsers = async (req: Request, res: Response) => {
         return this.userRepository.getAllUsers().then(users => {
             return res.send(users);
         }).catch(err => {

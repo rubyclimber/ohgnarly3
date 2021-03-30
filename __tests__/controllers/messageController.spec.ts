@@ -59,13 +59,12 @@ describe('MessageController', () => {
         });
 
         it('should raise an error if insert fails', async () => {
-            messageRepository.addMessage = jest.fn().mockRejectedValue(new Error('failure'));
+            const error = new Error('failure');
+            messageRepository.addMessage = jest.fn().mockRejectedValue(error);
 
-            try {
-                await messageController.createMessage(req, res);
-            } catch (err) {
-                expect(res.send).toHaveBeenCalledWith(err);
-            }
+            await messageController.createMessage(req, res);
+
+            expect(res.send).toHaveBeenCalledWith(error);
         });
     });
 
