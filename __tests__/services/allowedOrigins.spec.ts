@@ -2,6 +2,7 @@ import {AllowedOrigins} from '../../services/allowedOrigins';
 
 describe('AllowedOrigins', () => {
     let allowedOrigins: AllowedOrigins;
+
     describe('origin', () => {
         beforeEach(() => {
             process.env.ALLOWED_ORIGINS = '1|2'

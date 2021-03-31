@@ -8,7 +8,7 @@
     "test": "npm-run-all -c test-create test-start test-run test-stop test-rm",
     "print-version": "node -v",
     "test-start": "docker-compose start",
-    "test-create": "docker-compose create",
+    "test-create": "docker-compose up --no-start",
     "test-run": "jest --coverage",
     "test-stop": "docker-compose stop",
     "test-rm": "docker-compose rm -f"
