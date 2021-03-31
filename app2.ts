@@ -29,7 +29,6 @@ const origin = new AllowedOrigins();
  */
 mongoose.Promise = global.Promise;
 const connectionString = Settings.connectionStrings()['ohgnarly'];
-console.log('conn_str', connectionString);
 mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true});
 
 /**
@@ -58,7 +57,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(authorization.validateApiCall);
-app.use('/', new Routes(io, express.Router()).buildRouteConfigurer());
+const router = express.Router();
+app.use('/', new Routes(io).configureRoutes(router));
 
 
 function normalizePort(val: string) {

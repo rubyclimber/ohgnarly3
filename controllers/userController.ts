@@ -1,5 +1,4 @@
 import {Request, Response} from 'express';
-import {UserDocument} from '../models/user';
 import {UserRepository} from '../repositories/userRepository';
 
 export class UserController {
@@ -24,52 +23,54 @@ export class UserController {
     };
 
     checkEmailAddress = async (req: Request, res: Response) => {
-        const emailAddress = req.body.emailAddress;
-        return this.userRepository.getUserByEmailAddress(emailAddress).then((user: UserDocument) => {
+        try {
+            const emailAddress = req.body.emailAddress;
+            const user = await this.userRepository.getUserByEmailAddress(emailAddress)
             const response = {
                 isAvailable: !user
             };
 
             return res.send(response);
-        }).catch(err => {
+        } catch (err) {
             return res.send(err);
-        });
+        }
     };
 
     getUser = async (req: Request, res: Response) => {
-        const userName = req.params.userName;
-        return this.userRepository.getUserByUserName(userName).then((user: UserDocument) => {
+        try {
+            const userName = req.params.userName;
+            const user = await this.userRepository.getUserByUserName(userName);
             if (!user) {
                 res.send(Error('User not found in database'));
             }
 
             return res.send(user);
-        }).catch(err => {
+        } catch (err) {
             return res.send(err);
-        });
+        }
     };
 
     createUser = async (req: Request, res: Response) => {
-        return this.userRepository.getAllPendingUsers().then((users: UserDocument[]) => {
+        try {
+            const users = await this.userRepository.getAllPendingUsers();
             if (users && users.length && users.length >= 20) {
                 return res.send({success: false});
             }
 
-            return this.userRepository.addPendingUser(req.body).then(user => {
-                return res.send({success: true});
-            }).catch(err => {
-                return res.send(err);
-            });
-        }).catch(err => {
+            await this.userRepository.addPendingUser(req.body)
+            return res.send({success: true});
+
+        } catch (err) {
             return res.send(err);
-        });
+        }
     };
 
     getUsers = async (req: Request, res: Response) => {
-        return this.userRepository.getAllUsers().then(users => {
+        try {
+            const users = await this.userRepository.getAllUsers();
             return res.send(users);
-        }).catch(err => {
+        } catch (err) {
             return res.send(err);
-        });
+        }
     };
 }

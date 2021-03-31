@@ -4,7 +4,7 @@
   "description": "ohgnarly.com",
   "main": "./bin/www",
   "scripts": {
-    "start": "node app.js",
+    "start": "node dist/app2.js --trace-warnings",
     "test": "npm-run-all -c test-create test-start test-run test-stop test-rm",
     "print-version": "node -v",
     "test-start": "docker-compose start",
@@ -28,7 +28,7 @@
     "dotenv": "^8.2.0",
     "express": ">=4.17.1",
     "imdb-api": "^4.4.1",
-    "mongoose": "^5.7.7",
+    "mongoose": "^5.12.2",
     "morgan": ">=1.9.1",
     "serve-favicon": "^2.5.0",
     "socket.io": "^4.0.0"
