@@ -1,7 +1,7 @@
 import {UserRepository} from '../../repositories/userRepository';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import {userModel} from "../../models/user";
+import {UserDocument, userModel} from "../../models/user";
 
 dotenv.config();
 
@@ -28,12 +28,12 @@ describe('userRepository', () => {
         beforeEach(async () => {
             await userModel.insertMany([
                 {
-                    "userName": "fsmitty",
-                    "password": "pass7",
-                    "firstName": "Fritz",
-                    "lastName": "Smith",
-                    "emailAddress": "f.s@test.com"
-                }
+                    userName: "fsmitty",
+                    password: "pass7",
+                    firstName: "Fritz",
+                    lastName: "Smith",
+                    emailAddress: "f.s@test.com"
+                } as UserDocument
             ]);
         });
 

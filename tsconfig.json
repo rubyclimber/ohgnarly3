@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "target": "ES5",
     "module": "CommonJS",
     "noImplicitAny": true,
@@ -8,8 +9,9 @@
     "noUnusedLocals": true,
     "esModuleInterop": true,
     "sourceMap": true,
-    "outDir": "dist/"
+    "outDir": "dist/",
+    "skipLibCheck": true
   },
   "include": ["./**/*"],
-  "exclude": ["node_modules", "__tests__"]
+  "exclude": ["**/node_modules/*", "**/__tests__/*"]
 }

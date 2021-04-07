@@ -39,13 +39,30 @@ db.Users.insertMany([
     }
 ]);
 
-db.ChatUsers.insertOne({
-    "userName": "bsmitty",
-    "password": "pass3",
-    "firstName": "Benjamin",
-    "lastName": "Smith",
-    "emailAddress": "b.s@test.com"
-});
+db.ChatUsers.insertMany([
+    {
+        "userName": "bsmitty",
+        "password": "pass3",
+        "firstName": "Benjamin",
+        "lastName": "Smith",
+        "emailAddress": "b.s@test.com"
+    },
+    {
+        "userName": "jackburton",
+        "password": "$2a$10$Vi3qF.mdSdTc1t6biVB92uyijfDvjh26yIDo1A/X.gT8OQEk5hmMS",
+        "firstName": "Jack",
+        "lastName": "Burton",
+        "emailAddress": "j.b@test.com"
+    },
+    {
+        "userName": "wangchi",
+        "password": "$2a$10$VVpO74.W7OoP30azRI44GOmYfvWkTkqTEQIS7mZtw0610244DPV1.te",
+        "firstName": "Wang",
+        "lastName": "Chi",
+        "emailAddress": "w.c@test.com"
+    }
+
+]);
 
 db.PendingUsers.insertMany([
     {

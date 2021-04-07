@@ -40,8 +40,7 @@ export class LoginController {
             } else {
                 res.send({userId: null, success: false, socketUrl: ''});
             }
-        } catch
-            (err) {
+        } catch (err) {
             res.status(500);
             return res.send(ResponseBuilder.buildExceptionResponse(err));
         }

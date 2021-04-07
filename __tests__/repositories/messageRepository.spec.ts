@@ -1,7 +1,7 @@
 import {MessageRepository} from '../../repositories/messageRepository';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import {Message, MessageModel} from '../../models/message';
+import {Message, MessageDocument, MessageModel} from '../../models/message';
 
 dotenv.config();
 
@@ -33,7 +33,7 @@ describe('messageRepository', () => {
                     userId: i % 2 == 0 ? '123' : '456'
                 });
             }
-            await MessageModel.insertMany(messages);
+            await MessageModel.insertMany(messages as MessageDocument[]);
         });
 
         it('should return 25 page 0 messages', async () => {
@@ -61,7 +61,7 @@ describe('messageRepository', () => {
                     userId: '123'
                 });
             }
-            await MessageModel.insertMany(messages);
+            await MessageModel.insertMany(messages as MessageDocument[]);
         });
 
         it('should return 2 sup messages', async () => {
@@ -85,7 +85,7 @@ describe('messageRepository', () => {
                     createdAt: new Date(2018, 3, day, 13, 25, 43, 236)
                 });
             }
-            await MessageModel.insertMany(messages);
+            await MessageModel.insertMany(messages as MessageDocument[]);
         });
 
         it('should return 5 messages from searched date', async () => {

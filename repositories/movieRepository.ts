@@ -1,5 +1,5 @@
 import {Movie, MovieDocument, MovieModel} from '../models/movie';
-import * as imdb from 'imdb-api'
+import * as imdb from 'imdb-api';
 import {Movie as ImdbMovie} from 'imdb-api';
 
 export class MovieRepository {

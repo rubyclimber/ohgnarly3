@@ -44,7 +44,15 @@ const appServer = app.listen(port, onListening);
 /**
  * Create socket io object and create socket dependencies.
  */
-const io = new Server(appServer);
+const io = new Server(appServer, {
+    cors: {
+        origin: Settings.allowedOrigins(),
+        methods: ['GET', 'POST'],
+        credentials: false
+    },
+    transports: ['polling', 'websocket'],
+    allowEIO3: true
+});
 
 app.on('error', onError);
 io.on('connection', onSocketConnect);
