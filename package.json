@@ -4,7 +4,7 @@
   "description": "ohgnarly.com",
   "main": "./bin/www",
   "scripts": {
-    "start": "node dist/app2.js --trace-warnings",
+    "start": "node dist/app.js --trace-warnings",
     "test": "npm-run-all -c test-create test-start test-run test-stop test-rm",
     "print-version": "node -v",
     "test-start": "docker-compose start",
