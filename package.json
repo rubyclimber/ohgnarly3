@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node dist/app.js --trace-warnings",
     "test": "npm-run-all -c test-create test-start test-run test-stop test-rm",
+    "postinstall": "npm run build-ts",
+    "build-ts": "tsc",
     "print-version": "node -v",
     "test-start": "docker-compose start",
     "test-create": "docker-compose up --no-start",
